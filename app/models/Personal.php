@@ -19,7 +19,7 @@ class Personal extends Model
         'phone',
         'email',
     ];
-    function users(){
-        return $this->hasMany(auth\User::class);
+    function user(){
+        return $this->hasOne(auth\User::class);
     }
 }

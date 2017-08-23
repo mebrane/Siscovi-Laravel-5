@@ -16,47 +16,46 @@ class AuthSeed extends Seeder
     {
         //
 
-        $owner = new  Role();
-        $owner->name         = 'owner';
-        $owner->display_name = 'Project Owner'; // optional
-        $owner->description  = 'User is the owner of a given project'; // optional
-        $owner->save();
-
-        $admin = new Role();
-        $admin->name         = 'admin';
-        $admin->display_name = 'User Administrator'; // optional
-        $admin->description  = 'User is allowed to manage and edit other users'; // optional
+        $admin = new  Role();
+        $admin->name = 'admin';
+        $admin->display_name = 'Admin'; // optional
+        $admin->description = 'User is an admin'; // optional
         $admin->save();
 
-        //$user = User::where('username', '=', 'michele')->first();
-        $user = User::find(1);
+        $role1 = new  Role();
+        $role1->name = 'employee';
+        $role1->display_name = 'Employee'; // optional
+        $role1->description = 'User is an employee'; // optional
+        $role1->save();
 
-// role attach alias
-        // $user->attachRole([$owner,$admin]); // parameter can be an Role object, array, or id
-        $user->attachRole($admin);
-
-
-
-        //PERMISSIONS
-
-        $createPost = new Permission();
-        $createPost->name         = 'create-post';
-        $createPost->display_name = 'Create Posts'; // optional
+        $createPersonal = new App\models\auth\Permission();
+        $createPersonal->name = 'create-personal';
+        $createPersonal->display_name = 'Create Personals'; // optional
 // Allow a user to...
-        $createPost->description  = 'create new blog posts'; // optional
-        $createPost->save();
+        $createPersonal->description = 'Create new personals'; // optional
+        $createPersonal->save();
 
-        $editUser = new Permission();
-        $editUser->name         = 'edit-user';
-        $editUser->display_name = 'Edit Users'; // optional
+        $editPersonal = new Permission();
+        $editPersonal->name = 'edit-personal';
+        $editPersonal->display_name = 'Edit Personals'; // optional
 // Allow a user to...
-        $editUser->description  = 'edit existing users'; // optional
-        $editUser->save();
+        $editPersonal->description = 'Edit existing personal'; // optional
+        $editPersonal->save();
 
-        $admin->attachPermission($createPost);
-// equivalent to $admin->perms()->sync(array($createPost->id));
+        $admin->attachPermissions(array($createPersonal, $editPersonal));
 
-        $owner->attachPermissions(array($createPost, $editUser));
-// equivalent to $owner->perms()->sync(array($createPost->id, $editUser->id));
+        \App\models\Personal::find(1)
+            ->user()->save(factory(User::class,1)->make()->first());
+//        factory(User::class,5)->create();
+//        User::find(1)->attachRole($admin);
+//        User::find(2)->attachRole($admin);
+//
+//        User::find(3)->attachRole($role1);
+//        User::find(4)->attachRole($role1);
+//        User::find(5)->attachRole($role1);
+
+
+
+
     }
 }

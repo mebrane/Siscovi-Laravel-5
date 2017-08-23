@@ -15,7 +15,13 @@ class AddForeignPersonalsUsers extends Migration
     {
         //
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('personal_id')->unsigned();
+//            $table->integer('personal_id')->unsigned();
+//            $table->foreign('personal_id')
+//                ->references('id')
+//                ->on('personals')
+//                ->onDelete('cascade')
+//                ->onUpdate('cascade');
+
             $table->foreign('personal_id')
                 ->references('id')
                 ->on('personals')
@@ -34,7 +40,7 @@ class AddForeignPersonalsUsers extends Migration
         //current_table | foreign_index | foreign
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign('users_personal_id_foreign');
-            $table->dropColumn('personal_id');
+            //$table->dropColumn('personal_id');
         });
     }
 }

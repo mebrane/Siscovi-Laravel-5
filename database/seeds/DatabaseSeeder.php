@@ -30,5 +30,13 @@ class DatabaseSeeder extends Seeder
 
 
         factory(App\models\Personal::class,10)->create();
+
+        $this->call(AuthSeed::class);
+
+
+
+
+
+
     }
 }
