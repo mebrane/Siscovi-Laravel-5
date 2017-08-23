@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Tract extends Model
 {
     //
+    protected $fillable=[
+        'name',
+        'highway',
+        'initial_km',
+        'final_km',
+        //FK
+        'district_id',
+    ];
     function district(){
         return $this->belongsTo(District::class);
     }

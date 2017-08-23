@@ -18,7 +18,7 @@ class CreateMachinesTable extends Migration
 
             $table->string('registry',10);
             $table->string('name')->unique();
-            $table->decimal('cost_per_hour',10,2);
+            $table->decimal('cost_per_hour',10,2)->unsigned();
             $table->string('brand');
             $table->string('type');
 

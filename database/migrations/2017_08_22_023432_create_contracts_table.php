@@ -20,7 +20,7 @@ class CreateContractsTable extends Migration
             $table->string('project');
             $table->date('begin_date');
             $table->date('end_date');
-            $table->decimal('amount',10,2);
+            $table->decimal('amount',10,2)->unsigned();
             $table->string('signature');
 
             $table->timestamps();

@@ -26,8 +26,8 @@ class CreatePersonalsTable extends Migration
             $table->char('gender',1);
 
             $table->string('address')->nullable();
-            $table->string('telf',20)->nullable();
-            $table->string('email',30)->unique()->nullable();
+            $table->string('phone',50)->nullable();
+            $table->string('email',50)->unique()->nullable();
 
             $table->timestamps();
         });

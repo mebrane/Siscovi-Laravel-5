@@ -15,10 +15,10 @@ class CreateMaterialsTable extends Migration
     {
         Schema::create('materials', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('type',1);
+            //$table->char('type',1);
             $table->string('name')->unique();
             $table->string('description');
-            $table->decimal('price',10,2);
+            $table->decimal('price',10,2)->unsigned();
             $table->integer('stock');
             $table->string('unit',6);
             $table->string('brand');

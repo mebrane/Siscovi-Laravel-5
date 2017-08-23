@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Province extends Model
 {
     //
+    protected $fillable=[
+      'name',
+    ];
+
     function department(){
         return $this->belongsTo(Department::class);
     }
