@@ -22,7 +22,7 @@ class AddForeignPersonalsUsers extends Migration
 //                ->onDelete('cascade')
 //                ->onUpdate('cascade');
 
-            $table->foreign('personal_id')
+            $table->foreign('id')
                 ->references('id')
                 ->on('personals')
                 ->onDelete('cascade')
@@ -39,7 +39,7 @@ class AddForeignPersonalsUsers extends Migration
     {
         //current_table | foreign_index | foreign
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign('users_personal_id_foreign');
+            $table->dropForeign('users_id_foreign');
             //$table->dropColumn('personal_id');
         });
     }

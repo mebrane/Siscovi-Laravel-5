@@ -20,6 +20,6 @@ class Personal extends Model
         'email',
     ];
     function user(){
-        return $this->hasOne(auth\User::class);
+        return $this->hasOne(auth\User::class,'id');
     }
 }
