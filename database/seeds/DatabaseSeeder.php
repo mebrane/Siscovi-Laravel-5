@@ -33,6 +33,21 @@ class DatabaseSeeder extends Seeder
 
         $this->call(AuthSeed::class);
 
+        factory(App\models\Unit::class,5)->create();
+
+        factory(\App\models\ActivityType::class,5)
+            ->create()
+            ->each(
+                function(\App\models\ActivityType $type){
+                    for($i=0;$i<3;$i++){
+
+                        $activity=factory(\App\models\Activity::class,1)->make()->first();
+
+                        $type->activities()->save($activity);
+                    }
+                }
+            );
+
 
 
 

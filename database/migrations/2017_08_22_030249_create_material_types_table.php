@@ -20,8 +20,8 @@ class CreateMaterialTypesTable extends Migration
         });
 
         Schema::table('materials',function(Blueprint $table){
-           $table->integer('material_type_id')->unsigned();
-           $table->foreign('material_type_id')
+           $table->integer('type_id')->unsigned();
+           $table->foreign('type_id')
                ->references('id')
                ->on('material_types')
                ->onDelete('cascade')
@@ -37,7 +37,7 @@ class CreateMaterialTypesTable extends Migration
     public function down()
     {
         Schema::table('materials',function (Blueprint $table){
-            $table->dropForeign('materials_material_type_id_foreign');
+            $table->dropForeign('materials_type_id_foreign');
         });
 
         Schema::dropIfExists('material_types');

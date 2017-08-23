@@ -11,6 +11,6 @@ class ActivityType extends Model
         'name'
     ];
     function activities(){
-        return $this->hasMany(Activity::class);
+        return $this->hasMany(Activity::class,'type_id');
     }
 }

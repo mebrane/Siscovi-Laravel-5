@@ -20,7 +20,7 @@ class CreateMaterialsTable extends Migration
             $table->string('description');
             $table->decimal('price',10,2)->unsigned();
             $table->integer('stock');
-            $table->string('unit',6);
+//            $table->string('unit',6);
             $table->string('brand');
             $table->timestamps();
         });

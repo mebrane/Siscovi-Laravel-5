@@ -17,7 +17,7 @@ class Material extends Model
         'unit_id',
         'brand',
         //Ext
-        'material_type_id',
+        'type_id',
     ];
 
     function type(){

@@ -11,6 +11,6 @@ class MaterialType extends Model
         'name'
     ];
     function materials(){
-        return $this->hasMany(Material::class);
+        return $this->hasMany(Material::class,'type_id');
     }
 }

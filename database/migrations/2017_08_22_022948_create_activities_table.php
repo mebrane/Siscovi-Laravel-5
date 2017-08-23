@@ -18,7 +18,7 @@ class CreateActivitiesTable extends Migration
 
             $table->string('item',6)->unique();
             $table->string('name')->unique();
-            $table->string('unit',6);
+//            $table->string('unit',6);
 
             $table->timestamps();
         });

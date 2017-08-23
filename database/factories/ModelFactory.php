@@ -11,6 +11,8 @@
 |
 */
 
+
+
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\models\auth\User::class, function (Faker\Generator $faker) {
     static $password;
@@ -45,3 +47,27 @@ $factory->define(App\models\Personal::class, function (Faker\Generator $faker) {
         'email' => $faker->unique()->email
     ];
 });
+
+$factory->define(App\models\Activity::class, function (Faker\Generator $faker) {
+    return [
+        'item' => $faker->unique()->numerify('######'),
+        'name' => $faker->unique()->sentence,
+        'unit_id'=> \App\models\Unit::all()->random()->id,
+        'type_id' => \App\models\ActivityType::all()->random()->id
+   ];
+});
+
+$factory->define(App\models\ActivityType::class, function (Faker\Generator $faker) {
+    return [
+        'name' => 'AT-'.$faker->unique()->word,
+    ];
+});
+
+$factory->define(App\models\Unit::class, function (Faker\Generator $faker) {
+    return [
+        'name' => 'U-'.$faker->unique()->word,
+        'description' => $faker->sentence,
+        'type' => $faker->randomElement(['A','B','C']),
+    ];
+});
+
