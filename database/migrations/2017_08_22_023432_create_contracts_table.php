@@ -18,8 +18,8 @@ class CreateContractsTable extends Migration
 
             $table->string('name')->unique();
             $table->string('project');
-            $table->date('begin_date');
-            $table->date('end_date');
+            $table->date('starts_at');
+            $table->date('ends_at');
             $table->decimal('amount',10,2)->unsigned();
             $table->string('signature');
 

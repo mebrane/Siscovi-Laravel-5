@@ -14,9 +14,9 @@ class Material extends Model
         'description',
         'price',
         'stock',
-        'unit_id',
         'brand',
         //Ext
+        'unit_id',
         'type_id',
     ];
 

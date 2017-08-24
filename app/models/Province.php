@@ -8,7 +8,8 @@ class Province extends Model
 {
     //
     protected $fillable=[
-      'name',
+        'name',
+        'department_id',
     ];
 
     function department(){

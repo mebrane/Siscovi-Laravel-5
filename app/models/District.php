@@ -10,6 +10,7 @@ class District extends Model
     protected $fillable=[
         'name',
         'ubigeo',
+        'province_id',
     ];
 
     function province(){

@@ -10,8 +10,8 @@ class Tract extends Model
     protected $fillable=[
         'name',
         'highway',
-        'initial_km',
-        'final_km',
+        'start_km',
+        'end_km',
         //FK
         'district_id',
     ];

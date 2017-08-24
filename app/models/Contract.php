@@ -11,8 +11,8 @@ class Contract extends Model
     protected $fillable=[
         'name',
         'project',
-        'begin_date',
-        'end_date',
+        'starts_at',
+        'ends_at',
         'amount',
         'signature',
         'customer_id',

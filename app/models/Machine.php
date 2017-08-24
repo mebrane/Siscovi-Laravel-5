@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Machine extends Model
 {
     //
+    const TYPES=[
+        'A','B','C',
+    ];
+
     protected $fillable=[
         'registry',
         'name',

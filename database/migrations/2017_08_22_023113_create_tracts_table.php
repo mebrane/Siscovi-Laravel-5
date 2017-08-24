@@ -18,8 +18,8 @@ class CreateTractsTable extends Migration
 
             $table->string('name')->unique();
             $table->string('highway');
-            $table->decimal('initial_km',10,2);
-            $table->decimal('final_km',10,2);
+            $table->decimal('start_km',10,2);
+            $table->decimal('end_km',10,2);
 
             $table->timestamps();
         });
