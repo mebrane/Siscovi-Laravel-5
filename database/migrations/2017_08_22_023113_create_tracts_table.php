@@ -22,6 +22,7 @@ class CreateTractsTable extends Migration
             $table->decimal('end_km',10,2);
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

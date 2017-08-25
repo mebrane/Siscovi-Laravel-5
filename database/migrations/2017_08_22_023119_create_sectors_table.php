@@ -26,6 +26,7 @@ class CreateSectorsTable extends Migration
                 ->on('tracts')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            $table->softDeletes();
         });
     }
 

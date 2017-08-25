@@ -23,6 +23,7 @@ class CreateMachinesTable extends Migration
             $table->string('type');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

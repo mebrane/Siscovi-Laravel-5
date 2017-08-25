@@ -24,6 +24,7 @@ class CreateContractsTable extends Migration
             $table->string('signature');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

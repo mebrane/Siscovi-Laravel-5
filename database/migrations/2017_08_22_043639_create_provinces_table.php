@@ -24,6 +24,7 @@ class CreateProvincesTable extends Migration
                 ->on('departments')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            $table->softDeletes();
         });
     }
 

@@ -19,6 +19,7 @@ class CreateUnitsTable extends Migration
             $table->string('description');
             $table->char('type',1);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('activities', function (Blueprint $table) {

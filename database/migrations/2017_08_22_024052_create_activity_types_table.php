@@ -19,6 +19,7 @@ class CreateActivityTypesTable extends Migration
             $table->string('name')->unique();
 
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('activities', function (Blueprint $table) {

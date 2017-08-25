@@ -21,6 +21,7 @@ class CreateActivitiesTable extends Migration
 //            $table->string('unit',6);
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

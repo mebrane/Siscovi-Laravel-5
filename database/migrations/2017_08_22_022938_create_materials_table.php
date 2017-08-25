@@ -23,6 +23,7 @@ class CreateMaterialsTable extends Migration
 //            $table->string('unit',6);
             $table->string('brand');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

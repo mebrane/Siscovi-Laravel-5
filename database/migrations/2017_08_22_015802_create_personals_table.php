@@ -29,6 +29,7 @@ class CreatePersonalsTable extends Migration
             $table->string('phone',50)->nullable();
             $table->string('email',50)->unique()->nullable();
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -26,6 +26,7 @@ class CreateCompaniesTable extends Migration
             $table->string('website')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('machines', function (Blueprint $table) {

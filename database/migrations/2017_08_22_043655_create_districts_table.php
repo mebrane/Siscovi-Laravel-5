@@ -25,6 +25,7 @@ class CreateDistrictsTable extends Migration
                 ->on('provinces')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            $table->softDeletes();
         });
 
         Schema::table('tracts',function(Blueprint $table){
