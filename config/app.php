@@ -179,6 +179,7 @@ return [
 
         //Ext
         Zizaco\Entrust\EntrustServiceProvider::class,
+        Dingo\Api\Provider\LaravelServiceProvider::class,
 
     ],
 
