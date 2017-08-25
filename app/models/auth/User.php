@@ -10,8 +10,14 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 class User extends Authenticatable
 {
     use Notifiable;
-    use EntrustUserTrait;
-    use SoftDeletes;
+    use EntrustUserTrait { restore as private restoreA; }
+    use SoftDeletes { restore as private restoreB; }
+
+    public function restore()
+    {
+        $this->restoreA();
+        $this->restoreB();
+    }
 
     /**
      * The attributes that are mass assignable.
