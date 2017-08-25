@@ -4,6 +4,7 @@
 
 ## Packages
 - [ENTRUST (Laravel 5 Package)](https://github.com/Zizaco/entrust)
+- [Dingo API](https://github.com/dingo/api/wiki)
 
 ## Relationships
 - [EL5 - Introducing the Laravel One-to-One Relationship](http://www.easylaravelbook.com/blog/2015/03/05/introducing-the-one-to-one-relationship/)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Auth;
 
+use App\Http\Controllers\BaseController;
 use App\models\auth\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,9 +17,13 @@ class UserController extends Controller
     public function index()
     {
         //
-       $users=User::all();
-       return $users;
+         $users=User::all();
+        //return $this->response->collection($users);
+        return $users;
+
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -54,6 +59,7 @@ class UserController extends Controller
 //            'user'=>$user
 //        ]);
         //$user=User::findOrFail(1);
+        //return $this->response->item($user);
         return $user;
     }
 
