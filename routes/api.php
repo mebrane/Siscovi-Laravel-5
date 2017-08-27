@@ -28,6 +28,13 @@ $api->version('v1', function ($api) {
             ['except' => ['create', 'edit']]
         );
 
+        $api->resource(
+            'personals',
+            '\App\Http\Controllers\API\PersonalController',
+            //'\App\Http\Controllers\API\Auth\UserController',
+            ['except' => ['create', 'edit']]
+        );
+
     });
 
 });

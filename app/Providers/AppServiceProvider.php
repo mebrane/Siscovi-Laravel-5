@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Exceptions\CustomErrorResponses;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
+
+
+        $er=new CustomErrorResponses();
+        $er->responses();
     }
 
     /**
@@ -26,5 +34,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+
     }
+
+
+
 }

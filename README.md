@@ -13,3 +13,4 @@
 - [Laravel - Database Query Builder](https://laravel.com/docs/5.4/queries)
 - [Laravel - Collections](https://laravel.com/docs/5.4/collections)
 - [Laravel - Eloquent Collections](https://laravel.com/docs/5.4/eloquent-collections)
+- [Eloquent - Soft Deleting](https://laravel.com/docs/5.4/eloquent#soft-deleting)

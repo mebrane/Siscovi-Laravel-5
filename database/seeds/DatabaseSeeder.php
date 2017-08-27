@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
 
         factory(Personal::class, 10)->create();
 
-        $this->call(\AuthSeed::class);
+      $this->call(\AuthSeed::class);
 
         factory(Unit::class, 5)->create();
 

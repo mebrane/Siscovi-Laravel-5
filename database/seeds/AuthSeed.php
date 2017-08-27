@@ -59,6 +59,9 @@ class AuthSeed extends Seeder
         \App\models\Personal::find(5)
             ->user()->save(factory(User::class,1)->make()->first());
 
+        \App\models\Personal::find(6)
+            ->user()->save(factory(User::class)->make());
+
         \App\models\Personal::find(1)->user->attachRole($admin);
         \App\models\Personal::find(2)->user->attachRole($role1);
 //        factory(User::class,5)->create();

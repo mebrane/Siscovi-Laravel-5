@@ -39,7 +39,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $dates = ['deleted_at'];
+
     function personal(){
-        return $this->belongsTo(\App\models\Personal::class);
+        return $this->belongsTo(\App\models\Personal::class,'id');
     }
 }
