@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\REST;
 
 use App\models\Personal;
+use App\traits\CustomApiResponsesTrait;
 use App\transformers\PersonalTransformer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,6 +11,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PersonalController extends Controller
 {
+    use CustomApiResponsesTrait;
     /**
      * Display a listing of the resource.
      *
@@ -17,16 +19,17 @@ class PersonalController extends Controller
      */
     public function index()
     {
-        //
-        $model=Personal::with('user')->paginate();
-
-//        return $users;
-
-        if($model->total()>0){
-            return $this->response->paginator($model, new PersonalTransformer);
-        }
-
-        throw new NotFoundHttpException('No se encontraron resultados');
+        return $this->showAll(new Personal(), new PersonalTransformer());
+//        //
+//        $model=Personal::with('user')->paginate();
+//
+////        return $users;
+//
+//        if($model->total()>0){
+//            return $this->response->paginator($model, new PersonalTransformer);
+//        }
+//
+//        throw new NotFoundHttpException('No se encontraron resultados');
     }
 
     /**
