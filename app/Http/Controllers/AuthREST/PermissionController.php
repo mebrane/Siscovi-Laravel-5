@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Auth;
+namespace App\Http\Controllers\AuthREST;
 
 use App\models\auth\Permission;
 use Illuminate\Http\Request;

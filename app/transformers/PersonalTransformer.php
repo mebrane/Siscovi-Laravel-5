@@ -8,14 +8,32 @@
 
 namespace App\transformers;
 
-
+use App\traits\TransformersTrait;
 use Illuminate\Database\Eloquent\Model;
+use League\Fractal\Resource\Item;
+use League\Fractal\TransformerAbstract;
 
-class PersonalTransformer extends BaseTransformer
+class PersonalTransformer extends TransformerAbstract
 {
+    use TransformersTrait;
+
+    /**
+     * List of resources possible to include
+     *
+     * @var array
+     */
+    protected $availableIncludes = [
+        'user'
+    ];
+
+    /**
+     * Transform
+     *
+     * @return array
+     */
+
     public function transform(Model $model)
     {
-
         $response = [
             '_id' => (int)$model->id,
             'nombre' => $model->name,
@@ -36,16 +54,19 @@ class PersonalTransformer extends BaseTransformer
             ],
         ];
 
-        $constants = $this->datesTransformer($model);
-        $return = array_merge($response, $constants);
-//        if ($model->user) {
-            $return['user'] =
-                //$model->user;
-                $this->item($model->user,new UserTransformer);
+        return $this->addTransformerConstants($response,$model);
+    }
 
-//        }
+    /**
+     * Include User
+     *
+     * @return Item
+     */
+    public function includeUser(Model $model)
+    {
+        $user = $model->user;
 
-        return $return;
+        return $this->item($user, new UserTransformer);
     }
 
 }

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\AuthREST;
 
-use App\models\Personal;
-use App\transformers\PersonalTransformer;
+use App\models\auth\User;
+use App\transformers\UserTransformer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class PersonalController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,16 +18,21 @@ class PersonalController extends Controller
     public function index()
     {
         //
-        $model=Personal::with('user')->paginate();
+
+        //$users=User::with('personal')->get()->paginate(5);
+        //$users=User::with('personal')->paginate();
+        $users=User::paginate();
 
 //        return $users;
 
-        if($model->total()>0){
-            return $this->response->paginator($model, new PersonalTransformer);
+        if($users->total()>0){
+            return $this->response->paginator($users, new UserTransformer);
         }
 
         throw new NotFoundHttpException('No se encontraron resultados');
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -53,21 +58,27 @@ class PersonalController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\models\Personal  $personal
+     * @param  \App\models\auth\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Personal $personal)
+    public function show(User $user)
     {
         //
+//        return response()->json([
+//            'user'=>$user
+//        ]);
+        //$user=User::findOrFail(1);
+        return $this->response->item($user, new UserTransformer);
+        //return $user;
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\models\Personal  $personal
+     * @param  \App\models\auth\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Personal $personal)
+    public function edit(User $user)
     {
         //
     }
@@ -76,10 +87,10 @@ class PersonalController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\models\Personal  $personal
+     * @param  \App\models\auth\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Personal $personal)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -87,10 +98,10 @@ class PersonalController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\models\Personal  $personal
+     * @param  \App\models\auth\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Personal $personal)
+    public function destroy(User $user)
     {
         //
     }

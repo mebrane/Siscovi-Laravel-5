@@ -17,6 +17,10 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
+Route::get('test',function(){
+    return request()->query();
+});
+
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
@@ -24,17 +28,18 @@ $api->version('v1', function ($api) {
 
         $api->resource(
             'users',
-            '\App\Http\Controllers\API\Auth\UserController',
+            '\App\Http\Controllers\AuthREST\UserController',
             ['except' => ['create', 'edit']]
         );
 
         $api->resource(
             'personals',
-            '\App\Http\Controllers\API\PersonalController',
-            //'\App\Http\Controllers\API\Auth\UserController',
+            '\App\Http\Controllers\REST\PersonalController',
             ['except' => ['create', 'edit']]
         );
 
     });
 
 });
+
+

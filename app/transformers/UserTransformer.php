@@ -10,12 +10,14 @@ namespace App\transformers;
 
 
 use App\models\auth\User;
+use App\traits\TransformersTrait;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
 
-class UserTransformer extends BaseTransformer
+class UserTransformer extends TransformerAbstract
 {
 
+    use TransformersTrait;
     /**
      * List of resources possible to include
      *
@@ -34,24 +36,16 @@ class UserTransformer extends BaseTransformer
             'links'   => [
                 [
                     'rel' => 'self',
-                    'uri' => '/users/'.$user->id,
+                    'uri' => route('users.show', $user->id),
                 ]
             ],
         ];
 
-        $constants = $this->datesTransformer($user);
-        $return = array_merge($response,$constants);
-////        if($user->personal){
-//            $return['personal']=
-//                //$user->personal;
-//                $this->item($user->personal,new PersonalTransformer);
-////        }
-
-        return $return;
+        return $this->addTransformerConstants($response,$user);
     }
 
     /**
-     * Include Author
+     * Include Personal
      *
      * @return Item
      */
@@ -61,4 +55,19 @@ class UserTransformer extends BaseTransformer
 
         return $this->item($personal, new PersonalTransformer);
     }
+
+//    public static function originalAttribute($index)
+//    {
+//        $attributes = [
+//            '_id' => 'id',
+//            'name' => 'name',
+//            'email' => 'email',
+//            'isVerified' => 'verified',
+//            'isAdmin' => 'admin',
+//            'creationDate' => 'created_at',
+//            'lastChange' => 'updated_at',
+//            'deletedDate' => 'deleted_at',
+//        ];
+//        return isset($attributes[$index]) ? $attributes[$index] : null;
+//    }
 }

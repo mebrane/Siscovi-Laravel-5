@@ -2,15 +2,14 @@
 
 namespace App\Providers;
 
-use App\Exceptions\CustomErrorResponses;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-
-use Illuminate\Support\Facades\Response;
+use App\traits\CustomErrorResponsesTrait;
 use Illuminate\Support\Facades\Schema;
+
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+    use CustomErrorResponsesTrait;
     /**
      * Bootstrap any application services.
      *
@@ -18,12 +17,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
         Schema::defaultStringLength(191);
-
-
-        $er=new CustomErrorResponses();
-        $er->responses();
+        $this->customErrorResponses();
     }
 
     /**
