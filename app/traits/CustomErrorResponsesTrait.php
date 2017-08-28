@@ -7,6 +7,7 @@
  */
 namespace App\traits;
 
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 trait CustomErrorResponsesTrait
@@ -20,6 +21,7 @@ trait CustomErrorResponsesTrait
     {
         $this->modelNotFound();
         $this->notFound();
+        $this->validation();
     }
 
     private function modelNotFound()
@@ -47,6 +49,28 @@ trait CustomErrorResponsesTrait
             ->register(function (NotFoundHttpException $exception) {
                 return $this->response("La ruta especificada no ha sido encontrada.", 404);
             });
+    }
+
+    private function validation(){
+
+          app('Dingo\Api\Exception\Handler')
+              ->register(function (ValidationException $e) {
+
+
+                  $errors = $e->validator->errors()->getMessages();
+//                  if ($this->isFrontend($request)) {
+//                      return $request->ajax() ? response()->json($error, 422) : redirect()
+//                          ->back()
+//                          ->withInput($request->input())
+//                          ->withErrors($errors);
+//                  }
+
+//                  return $this->errorResponse($errors, 422);
+
+
+
+                  return $this->response($errors, 404);
+              });
     }
 
 

@@ -14,7 +14,7 @@ use App\traits\TransformersTrait;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
 
-class UserTransformer extends TransformerAbstract
+class UserTransformer extends BaseTransformer
 {
 
     use TransformersTrait;

@@ -13,9 +13,8 @@ use Illuminate\Database\Eloquent\Model;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
 
-class PersonalTransformer extends TransformerAbstract
+class PersonalTransformer extends BaseTransformer
 {
-    use TransformersTrait;
 
     /**
      * List of resources possible to include
@@ -68,5 +67,21 @@ class PersonalTransformer extends TransformerAbstract
 
         return $this->item($user, new UserTransformer);
     }
+
+
+    protected $attributes = [
+        'id' => '_id',
+        'name' => 'nombre',
+        'lastName' => 'apellido',
+        'DNI' => 'DNI',
+        'birthDate' => 'nacimiento',
+        'contractDate' => 'contrato',
+        'gender'=>'sexo',
+        'salary' => 'sueldo',
+        'address' => 'direccion',
+        'phone'=>'telefono',
+        'email'=>'correo'
+    ];
+
 
 }
