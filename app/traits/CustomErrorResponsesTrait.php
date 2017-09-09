@@ -69,7 +69,7 @@ trait CustomErrorResponsesTrait
 
 
 
-                  return $this->response($errors, 404);
+                  return $this->response($errors, 500);
               });
     }
 

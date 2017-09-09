@@ -31,7 +31,12 @@ trait CustomApiResponsesTrait
         $rules = [
             'per_page' => 'integer|min:2|max:50',
         ];
-        Validator::validate(request()->all(), $rules);
+        $messages = [
+            'per_page.integer' => 'El número de elementos por página debe ser un entero.',
+            'per_page.min' => 'El número de elementos por página no debe ser menor a 2.',
+            'per_page.max' => 'El número de elementos por página no debe ser mayor que 50.',
+        ];
+        Validator::validate(request()->all(), $rules,$messages);
 
         if (request()->has('per_page')) {
             $per_page = (int) request()->per_page;
