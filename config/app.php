@@ -180,7 +180,8 @@ return [
         //Ext
         Zizaco\Entrust\EntrustServiceProvider::class,
         Dingo\Api\Provider\LaravelServiceProvider::class,
-        Folklore\GraphQL\ServiceProvider::class,
+        Rebing\GraphQL\GraphQLServiceProvider::class,
+        Graphiql\GraphiqlServiceProvider::class,
 
     ],
 
@@ -233,7 +234,7 @@ return [
 
         //Ext
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
-        'GraphQL' => Folklore\GraphQL\Support\Facades\GraphQL::class,
+        'GraphQL' => Rebing\GraphQL\Support\Facades\GraphQL::class,
 
     ],
 

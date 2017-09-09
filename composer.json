@@ -10,7 +10,8 @@
         "laravel/tinker": "~1.0",
         "zizaco/entrust": "5.2.x-dev",
         "dingo/api": "1.0.*@dev",
-        "folklore/graphql": "~1.0.0"
+        "rebing/graphql-laravel": "~1.4",
+        "noh4ck/graphiql": "@dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -5,14 +5,14 @@ namespace App\GraphQL\Type;
 use App\models\Personal;
 use Carbon\Carbon;
 use GraphQL\Type\Definition\Type;
-use Folklore\GraphQL\Support\Type as BaseType;
-use GraphQL;
+use Rebing\GraphQL\Support\Type as GraphQLType;
 
-class PersonalType extends BaseType
+class PersonalType extends GraphQLType
 {
     protected $attributes = [
         'name' => 'PersonalType',
-        'description' => 'A type'
+        'description' => 'A type',
+        'model'=>Personal::class,
     ];
 
     public function fields()
@@ -91,7 +91,7 @@ class PersonalType extends BaseType
     {
         return strtolower($root->DNI);
     }
-    
+
     protected function resolveNacimientoField($root, $args)
     {
         return strtolower($root->birthDate);
