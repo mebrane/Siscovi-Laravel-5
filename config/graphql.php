@@ -111,7 +111,7 @@ return [
     'schemas' => [
         'default' => [
             'query' => [
-
+                'personales' => App\GraphQL\Query\PersonalsQuery::class
             ],
             'mutation' => [
 
@@ -136,7 +136,7 @@ return [
      * ]
      */
     'types' => [
-
+        'Personal' => 'App\GraphQL\Type\PersonalType'
     ],
 
     /*
