@@ -2,15 +2,20 @@
 
 namespace App\GraphQL\Query;
 
+use App\GraphQL\GraphQLTrait;
+use App\GraphQL\Type\PersonalType;
 use App\models\Personal;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL;
+use Mockery\Exception;
 use Rebing\GraphQL\Support\SelectFields;
 use Rebing\GraphQL\Support\Query;
 
+
 class PersonalsQuery extends Query
 {
+    use GraphQLTrait;
     protected $attributes = [
         'name' => 'PersonalsQuery',
         'description' => 'A query'
@@ -18,7 +23,6 @@ class PersonalsQuery extends Query
 
     public function type()
     {
-        //return Type::listOf(GraphQL::type('personal'));
         return GraphQL::paginate('personal');
     }
 
@@ -26,8 +30,10 @@ class PersonalsQuery extends Query
     {
         return [
             'id' => ['name' => 'id', 'type' => Type::int()],
-            'nombre' => ['name' => 'name', 'type' => Type::string()],
-            'dni' => ['name' => 'dni', 'type' => Type::string()],
+            'nombre' => ['type' => Type::string()],
+            'apellido' => ['type' => Type::string()],
+            'correo' => ['type' => Type::string()],
+            'DNI' => ['type' => Type::string()],
             'limit' => ['name' => 'limit', 'type' => Type::int()],
             'page' => ['name' => 'page', 'type' => Type::int()],
         ];
@@ -35,38 +41,34 @@ class PersonalsQuery extends Query
 
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {
-//        $select = $fields->getSelect();
-//        $with = $fields->getRelations();
+        $personalType = new PersonalType();
+        $where = ['id', 'DNI'];
+        $whereLike = ['nombre', 'apellido', 'correo'];
 
-//        return Post::with($fields->getRelations())->select($fields->getSelect())
-//            ->paginate($args['limit'], ['*'], 'page', $args['page']);
-//
-//        return [];
+        $selects = $this->_getSelects($fields->getSelect(), $personalType);
+        $cols = $this->_getCols($args, $personalType);
 
-        $q=new Personal();
+        $q = Personal
+                ::with($fields->getRelations())
+                ->select($selects);
 
-        $q=$q
-            ->with($fields->getRelations())
-            ->select($fields->getSelect());
-//        return Post::with($fields->getRelations())->select($fields->getSelect())
-//            ->paginate($args['limit'], ['*'], 'page', $args['page']);
-
-        if(isset($args['id']))
-        {
-            $q=$q->where('id' , $args['id']);
+        foreach ($where as $w) {
+            $key = $w;
+            if (isset($args[$key])) {
+                $col = $cols[$key];
+                $q->where($col, $args[$key]);
+            }
         }
 
-        if(isset($args['nombre']))
-        {
-            $name=$args['nombre'];
-            $q=$q->where('name', 'like',"%$name%");
+        foreach ($whereLike as $w) {
+            $key = $w;
+            if (isset($args[$key])) {
+                $col = $cols[$key];
+                $like = $args[$key];
+                $q->where($col, 'like', "%$like%");
+            }
         }
 
-        if(isset($args['dni']))
-        {
-            $like=$args['dni'];
-            $q=$q->where('dni', 'like',"%$like%");
-        }
         return $q->paginate($args['limit'], ['*'], 'page', $args['page']);
     }
 }

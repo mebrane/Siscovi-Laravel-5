@@ -20,69 +20,81 @@ class PersonalType extends GraphQLType
         return [
             'id' => [
                 'type' => Type::nonNull(Type::int()),
+                'col'=>'id',
                 'description' => 'The id of the personal'
             ],
-            'name' => [
+            'nombre' => [
                 'type' => Type::string(),
-                'name'=>'nombre',
                 'description' => 'The name of personal',
-//                'selectable'=>false,
+                'col'=>'name',
             ],
             'apellido' => [
                 'type' => Type::string(),
+                'col'=>'lastName',
                 'description' => 'The lastname of personal'
             ],
             'DNI' => [
                 'type' => Type::string(),
+                'col'=>'dni',
                 'description' => 'The DNI of personal'
             ],
             'nacimiento' => [
                 'type' => Type::string(),
+                'col'=>'birthDate',
                 'description' => 'The birth date of personal'
             ],
             'edad' => [
                 'type' => Type::int(),
-                'description' => 'The age of personal'
+                'description' => 'The age of personal',
+                'selectable'=>false
             ],
             'contrato' => [
                 'type' => Type::string(),
-                'description' => 'The contract date of personal'
+                'description' => 'The contract date of personal',
+                'col'=>'contractDate',
             ],
             'diasContrato' => [
                 'type' => Type::int(),
-                'description' => 'Days of contract of personal'
+                'description' => 'Days of contract of personal',
+                'selectable'=>false
             ],
             'tiempoContrato' => [
                 'type' => Type::string(),
-                'description' => 'Time of contract of personal'
+                'description' => 'Time of contract of personal',
+                'selectable'=>false,
             ],
             'sueldo' => [
                 'type' => Type::float(),
-                'description' => 'The salary of personal'
+                'description' => 'The salary of personal',
+                'col'=>'salary',
             ],
             'sexo' => [
                 'type' => Type::string(),
-                'description' => 'The gender of personal'
+                'description' => 'The gender of personal',
+                'col'=>'gender',
             ],
             'direccion' => [
                 'type' => Type::string(),
-                'description' => 'The address of personal'
+                'description' => 'The address of personal',
+                'col'=>'address',
             ],
             'telefono' => [
                 'type' => Type::string(),
-                'description' => 'The phone number of personal'
+                'description' => 'The phone number of personal',
+                'col'=>'phone',
             ],
             'correo' => [
                 'type' => Type::string(),
-                'description' => 'The email of personal'
+                'description' => 'The email of personal',
+                'col'=>'email',
             ],
         ];
     }
 
-//    protected function resolveNombreField($root, $args)
-//    {
-//        return strtolower($root->name);
-//    }
+    protected function resolveNombreField($root, $args)
+    {
+        return strtolower($root->name);
+    }
 
     protected function resolveApellidoField($root, $args)
     {
@@ -91,7 +103,7 @@ class PersonalType extends GraphQLType
 
     protected function resolveDNIField($root, $args)
     {
-        return strtolower($root->DNI);
+        return $root->dni;
     }
 
     protected function resolveNacimientoField($root, $args)
