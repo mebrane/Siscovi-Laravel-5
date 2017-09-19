@@ -40,4 +40,17 @@ trait GraphQLTrait
         return $cols;
     }
 
+    public function _getArgs(Array $args,GraphQLType $type){
+        $_args=[];
+        $typeFields=$type->fields();
+        foreach($args as $arg=>$value){
+            if(isset($typeFields[$arg])){
+                $col=$typeFields[$arg]['col'];
+                $_args[$col]=$value;
+            }
+        }
+//   throw new \Exception(implode(', ',$_args));
+//        throw new \Exception(json_encode($_args));
+        return $_args;
+    }
 }

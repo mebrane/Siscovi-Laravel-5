@@ -4,6 +4,7 @@
 
 ## Packages
 - [ENTRUST (Laravel 5 Package)](https://github.com/Zizaco/entrust)
+- [Rebing GraphQL](https://github.com/rebing/graphql-laravel)
 - [Dingo API](https://github.com/dingo/api/wiki)
 
 ## Relationships

@@ -88,6 +88,8 @@ return [
             ],
             'mutation' => [
 //                'example_mutation'  => ExampleMutation::class,
+                'updatePersonal'=>\App\GraphQL\Mutation\Personal\UpdatePersonalMutation::class,
+                'createPersonal'=>\App\GraphQL\Mutation\Personal\CreatePersonalMutation::class,
             ],
             'middleware' => []
         ],

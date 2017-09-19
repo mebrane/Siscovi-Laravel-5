@@ -19,7 +19,7 @@ class PersonalType extends GraphQLType
     {
         return [
             'id' => [
-                'type' => Type::nonNull(Type::int()),
+                'type' => Type::int(),
                 'col'=>'id',
                 'description' => 'The id of the personal'
             ],
@@ -35,7 +35,7 @@ class PersonalType extends GraphQLType
             ],
             'DNI' => [
                 'type' => Type::string(),
-                'col'=>'dni',
+                'col'=>'DNI',
                 'description' => 'The DNI of personal'
             ],
             'nacimiento' => [

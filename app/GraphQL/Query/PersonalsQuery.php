@@ -33,6 +33,7 @@ class PersonalsQuery extends Query
             'apellido' => ['type' => Type::string()],
             'correo' => ['type' => Type::string()],
             'DNI' => ['type' => Type::string()],
+
             'limit' => ['name' => 'limit', 'type' => Type::int()],
             'page' => ['name' => 'page', 'type' => Type::int()],
         ];
