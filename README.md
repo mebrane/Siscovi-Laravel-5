@@ -1,4 +1,4 @@
-# Siscovi Laravel/REST
+# Siscovi Laravel 5
 ## Workbench Model
 <a href="http://i.imgur.com/aJ6J0nu.png" target="_blank"><img width="200px" src="http://i.imgur.com/aJ6J0nu.png"></a>
 

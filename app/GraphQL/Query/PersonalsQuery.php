@@ -8,7 +8,6 @@ use App\models\Personal;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL;
-use Mockery\Exception;
 use Rebing\GraphQL\Support\SelectFields;
 use Rebing\GraphQL\Support\Query;
 
@@ -41,16 +40,16 @@ class PersonalsQuery extends Query
 
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {
-        $personalType = new PersonalType();
+
         $where = ['id', 'DNI'];
         $whereLike = ['nombre', 'apellido', 'correo'];
+        $personalType = new PersonalType();
 
         $selects = $this->_getSelects($fields->getSelect(), $personalType);
         $cols = $this->_getCols($args, $personalType);
 
-        $q = Personal
-                ::with($fields->getRelations())
-                ->select($selects);
+        $q = Personal::with($fields->getRelations())
+            ->select($selects);
 
         foreach ($where as $w) {
             $key = $w;
@@ -60,8 +59,8 @@ class PersonalsQuery extends Query
             }
         }
 
-        foreach ($whereLike as $w) {
-            $key = $w;
+        foreach ($whereLike as $wl) {
+            $key = $wl;
             if (isset($args[$key])) {
                 $col = $cols[$key];
                 $like = $args[$key];
