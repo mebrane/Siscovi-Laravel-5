@@ -36,7 +36,6 @@ trait GraphQLTrait
                 $cols[$arg]=$typeFields[$arg]['col'];
             }
         }
-//        throw new \Exception(implode(', ',$cols));
         return $cols;
     }
 
@@ -49,8 +48,14 @@ trait GraphQLTrait
                 $_args[$col]=$value;
             }
         }
-//   throw new \Exception(implode(', ',$_args));
-//        throw new \Exception(json_encode($_args));
         return $_args;
+    }
+
+    public function _getOrderBy($order,GraphQLType $type){
+        $typeFields=$type->fields();
+        if(isset($typeFields[$order])){
+            return $typeFields[$order]['col'];
+        }
+        return null;
     }
 }

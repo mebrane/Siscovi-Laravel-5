@@ -43,9 +43,8 @@ class CreatePersonalMutation extends Mutation
 
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {
-        $personal= new Personal();
-        $personal=$personal->create($this->_getArgs($args,new PersonalType()));
-
+        $m= new Personal();
+        $personal=$m->create($this->_getArgs($args,new PersonalType()));
         return $personal;
     }
 }

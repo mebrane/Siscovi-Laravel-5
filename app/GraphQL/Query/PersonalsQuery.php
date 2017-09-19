@@ -8,6 +8,7 @@ use App\models\Personal;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL;
+use Mockery\Exception;
 use Rebing\GraphQL\Support\SelectFields;
 use Rebing\GraphQL\Support\Query;
 
@@ -36,6 +37,7 @@ class PersonalsQuery extends Query
 
             'limit' => ['name' => 'limit', 'type' => Type::int()],
             'page' => ['name' => 'page', 'type' => Type::int()],
+            'order' => ['name' => 'order', 'type' => Type::string()],
         ];
     }
 
@@ -67,6 +69,12 @@ class PersonalsQuery extends Query
                 $like = $args[$key];
                 $q->where($col, 'like', "%$like%");
             }
+        }
+        if (isset($args['order'])) {
+            $order = $this->_getOrderBy($args['order'], $personalType);
+            if ($order) {
+                $q->orderBy($order);
+            };
         }
 
         return $q->paginate($args['limit'], ['*'], 'page', $args['page']);
