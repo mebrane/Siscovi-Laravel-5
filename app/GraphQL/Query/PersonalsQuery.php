@@ -18,15 +18,18 @@ class PersonalsQuery extends Query
 
     public function type()
     {
-        return Type::listOf(GraphQL::type('personal'));
+        //return Type::listOf(GraphQL::type('personal'));
+        return GraphQL::paginate('personal');
     }
 
     public function args()
     {
         return [
             'id' => ['name' => 'id', 'type' => Type::int()],
-            'nombre' => ['name' => 'nombre', 'type' => Type::string()],
+            'nombre' => ['name' => 'name', 'type' => Type::string()],
             'dni' => ['name' => 'dni', 'type' => Type::string()],
+            'limit' => ['name' => 'limit', 'type' => Type::int()],
+            'page' => ['name' => 'page', 'type' => Type::int()],
         ];
     }
 
@@ -41,6 +44,12 @@ class PersonalsQuery extends Query
 //        return [];
 
         $q=new Personal();
+
+        $q=$q
+            ->with($fields->getRelations())
+            ->select($fields->getSelect());
+//        return Post::with($fields->getRelations())->select($fields->getSelect())
+//            ->paginate($args['limit'], ['*'], 'page', $args['page']);
 
         if(isset($args['id']))
         {
@@ -58,6 +67,6 @@ class PersonalsQuery extends Query
             $like=$args['dni'];
             $q=$q->where('dni', 'like',"%$like%");
         }
-        return $q->get();
+        return $q->paginate($args['limit'], ['*'], 'page', $args['page']);
     }
 }

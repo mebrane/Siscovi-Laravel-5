@@ -22,9 +22,11 @@ class PersonalType extends GraphQLType
                 'type' => Type::nonNull(Type::int()),
                 'description' => 'The id of the personal'
             ],
-            'nombre' => [
+            'name' => [
                 'type' => Type::string(),
-                'description' => 'The name of personal'
+                'name'=>'nombre',
+                'description' => 'The name of personal',
+//                'selectable'=>false,
             ],
             'apellido' => [
                 'type' => Type::string(),
@@ -77,10 +79,10 @@ class PersonalType extends GraphQLType
         ];
     }
 
-    protected function resolveNombreField($root, $args)
-    {
-        return strtolower($root->name);
-    }
+//    protected function resolveNombreField($root, $args)
+//    {
+//        return strtolower($root->name);
+//    }
 
     protected function resolveApellidoField($root, $args)
     {
