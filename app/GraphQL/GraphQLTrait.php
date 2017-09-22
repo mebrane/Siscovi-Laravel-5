@@ -8,6 +8,8 @@
 
 namespace App\GraphQL;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Validator;
+use Rebing\GraphQL\Error\ValidationError;
 use Rebing\GraphQL\Support\SelectFields;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 trait GraphQLTrait
@@ -58,4 +60,12 @@ trait GraphQLTrait
         }
         return null;
     }
+
+//    public function _validate($args,$rules,$messages=[]){
+//
+//        $v=Validator::make($args,$rules,$messages);
+//        if($v->fails()){
+//            throw with(new ValidationError('validation'))->setValidator($v);
+//        }
+//    }
 }

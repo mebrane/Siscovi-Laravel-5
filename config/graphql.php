@@ -84,10 +84,13 @@ return [
         'default' => [
             'query' => [
 //                'example_query' => ExampleQuery::class,
-                  'personal'=>\App\GraphQL\Query\PersonalsQuery::class,
+//            Personal
+                  'personal'=>\App\GraphQL\Query\personal\PersonalQuery::class,
+                  'personals'=>\App\GraphQL\Query\personal\PersonalsQuery::class,
             ],
             'mutation' => [
 //                'example_mutation'  => ExampleMutation::class,
+//            Personal
                 'updatePersonal'=>\App\GraphQL\Mutation\Personal\UpdatePersonalMutation::class,
                 'createPersonal'=>\App\GraphQL\Mutation\Personal\CreatePersonalMutation::class,
             ],

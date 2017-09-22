@@ -88,6 +88,30 @@ class PersonalType extends GraphQLType
                 'description' => 'The email of personal',
                 'col'=>'email',
             ],
+            'creado' => [
+                'type' => Type::string(),
+                'description' => 'Fecha de creación',
+                'col'=>'created_at',
+                'resolve'=>function($root,$args){
+                    return strtolower($root->created_at);
+                }
+            ],
+            'actualizado' => [
+                'type' => Type::string(),
+                'description' => 'Fecha de última actualización',
+                'col'=>'updated_at',
+                'resolve'=>function($root,$args){
+                    return strtolower($root->updated_at);
+                }
+            ],
+            'eliminado' => [
+                'type' => Type::string(),
+                'description' => 'Fecha de eliminación',
+                'col'=>'deleted_at',
+                'resolve'=>function($root,$args){
+                    return $root->deleted_at ? strtolower($root->deleted_at) : $root->deleted_at;
+                }
+            ],
         ];
     }
 
