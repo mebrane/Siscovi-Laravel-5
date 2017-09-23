@@ -25,4 +25,8 @@ class Personal extends Model
     function user(){
         return $this->hasOne(auth\User::class,'id');
     }
+
+//    function getNombreAttribute(){
+//        return $this->name;
+//    }
 }

@@ -40,9 +40,12 @@ trait GraphQLQueryTrait
 
             if (strlen($sort) > 1) {
                 if (substr($sort, 0, 1) == '-') {
-                    $sort = substr($sort, 1, sizeof($sort) - 1);
+                    $sort = substr($sort, 1, strlen($sort) - 1);
+//                    $this->_showError("Response: ".$sort);
                     $sort = $this->_getOriginalAttr($sort, $type);
+
                     if ($sort) {
+
                         $q=$q->orderByDesc($sort);
                     }
                 } else {

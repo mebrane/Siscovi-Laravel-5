@@ -5,8 +5,10 @@ namespace App\GraphQL\Mutation\personal;
 use App\GraphQL\traits\GraphQLMutationTrait;
 use App\GraphQL\Type\PersonalType;
 use App\models\Personal;
+use Carbon\Carbon;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
+use Illuminate\Validation\Rule;
 use Rebing\GraphQL\Support\Mutation;
 use Rebing\GraphQL\Support\SelectFields;
 use GraphQL;
@@ -41,26 +43,47 @@ class UpdatePersonalMutation extends Mutation
         ];
     }
 
+    public function _rules($args){
+        $tomorrow=Carbon::tomorrow();
+        $today=Carbon::today();
+        $years18ago=$today->subYear(18);
+
+        return [
+            'id' => 'required|numeric',
+            'nombre' => 'min:3|max:100',
+            'apellido' => 'min:3|max:100',
+            'correo' => [
+                'email',
+                'min:3',
+                'max:100',
+                Rule::unique('personals','email')
+                    ->ignore($args['id'])
+            ],
+            'DNI' => [
+                'digits:8',
+                'unique:personals,DNI,'.$args['id']
+            ],
+            'sueldo' => 'numeric|min:100|max:100000',
+            'contrato' => "date|before:$tomorrow",
+            'nacimiento' => "date|before:$years18ago",
+            'sexo' => [Rule::in(['M','F'])],
+            'direccion' => 'max:200',
+            'telefono' => 'digits_between:0,50',
+        ];
+    }
+
+    private function _messages(){
+        return [];
+    }
+
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {
+        $this->_validate($args);
         $personal = Personal::find($args['id']);
         if(!$personal) {
             throw new \Exception("Personal no existe");
         }
-//        $args=$this->_argsToColumns($args,new PersonalType());
 
-//        $keys=[
-//            'nombre',
-//            'apellido',
-//            'correo',
-//            'DNI',
-//            'sueldo',
-//            'contrato',
-//            'nacimiento',
-//            'sexo',
-//            'direccion',
-//            'telefono',
-//        ];
         $keys=array_keys($this->args());
         $personal=$this->_fillOnUpdate($personal,$keys,$args,new PersonalType());
 

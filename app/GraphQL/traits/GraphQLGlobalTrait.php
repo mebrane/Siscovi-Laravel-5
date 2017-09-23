@@ -15,10 +15,10 @@ use Rebing\GraphQL\Error\ValidationError;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 trait GraphQLGlobalTrait
 {
-    protected function _validate($args){
+    protected function _validate($args=[]){
 
         $messages=$this->_messages();
-        $rules=$this->_rules();
+        $rules=$this->_rules($args);
 
         $messages=array_merge(
             [

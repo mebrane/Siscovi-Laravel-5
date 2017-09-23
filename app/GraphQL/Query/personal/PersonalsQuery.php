@@ -42,6 +42,7 @@ class PersonalsQuery extends Query
 
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {
+//        $this->_showError(implode(",",$fields->getSelect()) );
         $q = new Personal();
         $where = ['DNI'];
         $whereLike = ['nombre', 'apellido', 'correo'];
