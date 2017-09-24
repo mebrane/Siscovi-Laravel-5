@@ -11,7 +11,8 @@
         "zizaco/entrust": "5.2.x-dev",
         "dingo/api": "1.0.*@dev",
         "rebing/graphql-laravel": "~1.4",
-        "noh4ck/graphiql": "@dev"
+        "noh4ck/graphiql": "@dev",
+        "sofa/eloquence": "~5.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

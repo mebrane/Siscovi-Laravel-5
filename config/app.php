@@ -182,7 +182,7 @@ return [
         Dingo\Api\Provider\LaravelServiceProvider::class,
         Rebing\GraphQL\GraphQLServiceProvider::class,
         Graphiql\GraphiqlServiceProvider::class,
-
+        Sofa\Eloquence\ServiceProvider::class,
     ],
 
     /*

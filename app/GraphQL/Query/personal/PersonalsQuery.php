@@ -46,16 +46,17 @@ class PersonalsQuery extends Query
         $q = new Personal();
         $where = ['DNI'];
         $whereLike = ['nombre', 'apellido', 'correo'];
-        $type = new PersonalType();
+        $sort = ['id','nombre', 'apellido', 'correo','creado','eliminado','actualizado'];
 
         $q = $q->with($fields->getRelations());
-        $q = $this->_select($q, $fields->getSelect(), $type);
+        $q=$this->_selectData($q,$fields->getSelect());
 
-        $q=$this->_where($q,$args,$where,$type);
-        $q=$this->_whereLike($q,$args,$whereLike,$type);
+//        $this->_showError($q->toSql());
+        $q=$this->_where($q,$args,$where);
+        $q=$this->_whereLike($q,$args,$whereLike);
 
         if (isset($args['sort'])) {
-            $q = $this->_sortBy($q, $args['sort'], $type);
+            $q=$this->_sortData($q,$args['sort'],$sort);
         }
 
         return $q->paginate($args['limit'], ['*'], 'page', $args['page']);

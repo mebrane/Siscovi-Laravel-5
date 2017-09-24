@@ -4,8 +4,9 @@
 
 ## Packages
 - [ENTRUST (Laravel 5 Package)](https://github.com/Zizaco/entrust)
-- [Rebing GraphQL](https://github.com/rebing/graphql-laravel)
-- [Dingo API](https://github.com/dingo/api/wiki)
+- [Rebing/GraphQL](https://github.com/rebing/graphql-laravel)
+- [Dingo/API](https://github.com/dingo/api/wiki)
+- [Sofa/Eloquence](https://github.com/jarektkaczyk/eloquence/wiki)
 
 ## Relationships
 - [EL5 - Introducing the Laravel One-to-One Relationship](http://www.easylaravelbook.com/blog/2015/03/05/introducing-the-one-to-one-relationship/)

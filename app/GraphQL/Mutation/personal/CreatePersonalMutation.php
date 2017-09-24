@@ -29,7 +29,7 @@ class CreatePersonalMutation extends Mutation
     public function args()
     {
         return [
-            'name' => ['name'=>'nombre','type' => Type::nonNull(Type::string())],
+            'nombre' => ['type' => Type::nonNull(Type::string())],
             'apellido' => ['type' => Type::nonNull(Type::string())],
             'correo' => ['type' => Type::nonNull(Type::string())],
             'DNI' => ['type' => Type::nonNull(Type::string())],
@@ -72,10 +72,11 @@ class CreatePersonalMutation extends Mutation
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {
 //        $this->_showError(json_encode($args));
+//        $this->_showError(json_encode($this->_rules()));
         $this->_validate($args);
 
         $m= new Personal();
-        $personal=$m->create($this->_argsToColumns($args,new PersonalType()));
+        $personal=$m->create($args);
         return $personal;
     }
 }

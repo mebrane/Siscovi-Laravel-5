@@ -91,6 +91,9 @@ class PersonalType extends GraphQLType
                 'type' => Type::string(),
                 'description' => 'The email of personal',
                 'col' => 'email',
+//                'resolve'=>function($root,$args){
+//                    return strtolower($root->correo);
+//                }
             ],
             'creado' => [
                 'type' => Type::string(),
@@ -160,10 +163,10 @@ class PersonalType extends GraphQLType
         return strtolower($root->phone);
     }
 
-    protected function resolveCorreoField($root, $args)
-    {
-        return strtolower($root->email);
-    }
+//    protected function resolveCorreoField($root, $args)
+//    {
+//        return strtolower($root->email);
+//    }
 
     protected function resolveEdadField($root, $args)
     {

@@ -14,45 +14,39 @@ use Rebing\GraphQL\Support\Type as GraphQLType;
 trait GraphQLQueryTrait
 {
     use GraphQLGlobalTrait;
+
     /**
-     * @return Builder Returns the Builder with selection queries.
+     * @return Builder Returns the Builder with selects.
      */
-    protected function _select(Builder $q, array $selects, GraphQLType $type){
-        list($table, $col) = explode('.', $selects[0]);
-        $attributes = [];
-        foreach ($selects as $select) {
-            $_select = str_replace($table . '.', '', $select);
-            $attr = $this->_getOriginalAttr($_select, $type);
-            if ($attr) {
-                array_push($attributes, $table . '.' . $attr);
-            }
+    protected function _selectData(Builder $q, array $selects)
+    {
+        foreach ($selects as $key => $select) {
+            list($table, $field) = explode('.', $select);
+            $selects[$key] = $field;
+//            $q=$q->select($field);
         }
-        return $q->select($attributes);
+        return $q->select($selects);
     }
 
     /**
-     * @return Builder Returns the Builder with sort and sortDesc queries.
+     * @return Builder Returns the Builder with sort and sortDesc.
      */
-    protected function _sortBy(Builder $q, $arg, GraphQLType $type)
+    protected function _sortData(Builder $q, $arg,array $allowed)
     {
         $sorts = explode(',', $arg);
-        foreach ($sorts as $sort) {
 
-            if (strlen($sort) > 1) {
+        foreach ($sorts as $key => $sort) {
+
+            if (strlen($sort) > 1 && in_array($sort,$allowed)) {
+
                 if (substr($sort, 0, 1) == '-') {
+
                     $sort = substr($sort, 1, strlen($sort) - 1);
-//                    $this->_showError("Response: ".$sort);
-                    $sort = $this->_getOriginalAttr($sort, $type);
+                    $q->orderByDesc($sort);
 
-                    if ($sort) {
-
-                        $q=$q->orderByDesc($sort);
-                    }
                 } else {
-                    $sort = $this->_getOriginalAttr($sort, $type);
-                    if ($sort) {
-                        $q=$q->orderBy($sort);
-                    }
+
+                    $q->orderBy($sort);
                 }
             }
         }
@@ -61,16 +55,13 @@ trait GraphQLQueryTrait
     }
 
     /**
-     * @return Builder Returns the Builder with where queries.
+     * @return Builder Returns the builder with filtered where queries.
      */
-    protected function _where(Builder $q, array $args, array $where, GraphQLType $type){
-        foreach ($where as $w) {
-            $key = $w;
-            if (isset($args[$key])) {
-                $attr = $this->_getOriginalAttr($key,$type);
-                if($attr){
-                    $q=$q->where($attr, $args[$key]);
-                }
+    protected function _where(Builder $q, array $args, array $allowed)
+    {
+        foreach ($args as $key => $arg){
+            if(in_array($key,$allowed)){
+               $q->where($key,$arg);
             }
         }
         return $q;
@@ -79,15 +70,11 @@ trait GraphQLQueryTrait
     /**
      * @return Builder Returns the Builder with whereLike queries.
      */
-    protected function _whereLike(Builder $q, array $args, array $whereLike, GraphQLType $type){
-        foreach ($whereLike as $wl) {
-            $key = $wl;
-            if (isset($args[$key])) {
-                $attr = $this->_getOriginalAttr($key,$type);
-                $like = $args[$key];
-                if($attr){
-                    $q=$q->where($attr, 'like', "%$like%");
-                }
+    protected function _whereLike(Builder $q, array $args, array $allowed)
+    {
+        foreach ($args as $query => $arg){
+            if(in_array($query,$allowed)){
+                $q->where($query,'like', "%$arg%");
             }
         }
         return $q;

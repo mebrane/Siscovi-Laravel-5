@@ -79,20 +79,18 @@ class UpdatePersonalMutation extends Mutation
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {
         $this->_validate($args);
-        $personal = Personal::find($args['id']);
-        if(!$personal) {
-            throw new \Exception("Personal no existe");
+        $model = Personal::find($args['id']);
+        if(!$model) {
+            $this->_showError("Personal no existe");
         }
 
-        $keys=array_keys($this->args());
-        $personal=$this->_fillOnUpdate($personal,$keys,$args,new PersonalType());
+        $model=$this->_fillOnUpd($model,$args);
 
-
-        if (!$personal->isDirty()) {
+        if (!$model->isDirty()) {
             $this->_showError('Se debe especificar al menos un valor diferente para actualizar',422);
         }
-        $personal->save();
+        $model->save();
 
-        return $personal;
+        return $model;
     }
 }

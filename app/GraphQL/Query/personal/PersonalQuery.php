@@ -33,12 +33,10 @@ class PersonalQuery extends Query
 
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {
-        $q = new Personal();
-        $type = new PersonalType();
+        $q = Personal::with($fields->getRelations());
 
-        $q = $q->with($fields->getRelations());
-        $q = $this->_select($q, $fields->getSelect(), $type);
-        $q=$q->where('id',$args['id']);
+        $q=$this->_selectData($q,$fields->getSelect());
+        $q->where('id',$args['id']);
         $r=$q->first();
         if(!$r){
             throw new \Exception("Personal no encontrado");
