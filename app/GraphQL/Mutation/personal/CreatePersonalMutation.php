@@ -2,7 +2,8 @@
 
 namespace App\GraphQL\Mutation\personal;
 
-use App\GraphQL\traits\GraphQLMutationTrait;
+use App\GraphQL\traits\GraphQLGlobalTrait;
+//use App\GraphQL\traits\GraphQLMutationTrait;
 use App\GraphQL\Type\PersonalType;
 use App\models\Personal;
 use GraphQL;
@@ -14,7 +15,8 @@ use Rebing\GraphQL\Support\SelectFields;
 
 class CreatePersonalMutation extends Mutation
 {
-    use GraphQLMutationTrait;
+    use GraphQLGlobalTrait;
+//    use GraphQLMutationTrait;
     protected $attributes = [
         'name' => 'CreatePersonalMutation',
         'description' => 'A mutation'
@@ -71,8 +73,6 @@ class CreatePersonalMutation extends Mutation
 
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {
-//        $this->_showError(json_encode($args));
-//        $this->_showError(json_encode($this->_rules()));
         $this->_validate($args);
 
         $m= new Personal();

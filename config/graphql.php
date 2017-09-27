@@ -96,6 +96,8 @@ return [
 //            Personal
                 'updatePersonal'=>\App\GraphQL\Mutation\Personal\UpdatePersonalMutation::class,
                 'createPersonal'=>\App\GraphQL\Mutation\Personal\CreatePersonalMutation::class,
+                'deletePersonal'=>\App\GraphQL\Mutation\Personal\DestroyPersonalMutation::class,
+                'restorePersonal'=>\App\GraphQL\Mutation\Personal\RestorePersonalMutation::class,
             ],
             'middleware' => []
         ],

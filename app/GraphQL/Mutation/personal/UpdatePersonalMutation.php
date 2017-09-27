@@ -2,8 +2,8 @@
 
 namespace App\GraphQL\Mutation\personal;
 
+use App\GraphQL\traits\GraphQLGlobalTrait;
 use App\GraphQL\traits\GraphQLMutationTrait;
-use App\GraphQL\Type\PersonalType;
 use App\models\Personal;
 use Carbon\Carbon;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -14,6 +14,7 @@ use Rebing\GraphQL\Support\SelectFields;
 use GraphQL;
 class UpdatePersonalMutation extends Mutation
 {
+    use GraphQLGlobalTrait;
     use GraphQLMutationTrait;
     protected $attributes = [
         'name' => 'UpdatePersonalMutation',

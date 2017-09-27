@@ -13,31 +13,16 @@ use Rebing\GraphQL\Support\Type as GraphQLType;
 
 trait GraphQLQueryTrait
 {
-    use GraphQLGlobalTrait;
-
-    /**
-//     * @return Builder Returns the Builder with selects.
-//     */
-//    protected function _selectData(Builder $q, array $selects)
-//    {
-//        foreach ($selects as $key => $select) {
-//            list($table, $field) = explode('.', $select);
-//            $selects[$key] = $field;
-////            $q=$q->select($field);
-//        }
-//        return $q->select($selects);
-//    }
-
     /**
      * @return Builder Returns the Builder with sort and sortDesc.
      */
-    protected function _sortData(Builder $q, $arg,array $allowed)
+    protected function _sortData(Builder $q, $arg, array $allowed)
     {
         $sorts = explode(',', $arg);
 
         foreach ($sorts as $key => $sort) {
 
-            if (strlen($sort) > 1 && in_array($sort,$allowed)) {
+            if (strlen($sort) > 1 && in_array($sort, $allowed)) {
 
                 if (substr($sort, 0, 1) == '-') {
 
@@ -59,11 +44,26 @@ trait GraphQLQueryTrait
      */
     protected function _where(Builder $q, array $args, array $allowed)
     {
-        foreach ($args as $key => $arg){
-            if(in_array($key,$allowed)){
-               $q->where($key,$arg);
+        foreach ($args as $key => $arg) {
+            if (in_array($key, $allowed)) {
+                $q->where($key, $arg);
             }
         }
+        return $q;
+    }
+
+    /**
+     * @return Builder Returns the builder with filtered orWhere queries.
+     */
+    protected function _orWhere(Builder $q, array $args, array $allowed)
+    {
+        $q->where(function (Builder $q) use ($args, $allowed) {
+            foreach ($args as $key => $arg) {
+                if (in_array($key, $allowed)) {
+                    $q->orWhere($key, $arg);
+                }
+            }
+        });
         return $q;
     }
 
@@ -72,10 +72,10 @@ trait GraphQLQueryTrait
      */
     protected function _whereLike(Builder $q, array $args, array $allowed)
     {
-        foreach ($args as $query => $arg){
-            $arg=trim($arg);
-            if(in_array($query,$allowed) && $arg !=""){
-                $q->where($query,'like', "%$arg%");
+        foreach ($args as $query => $arg) {
+            $arg = trim($arg);
+            if (in_array($query, $allowed) && $arg != "") {
+                $q->where($query, 'like', "%$arg%");
             }
         }
         return $q;

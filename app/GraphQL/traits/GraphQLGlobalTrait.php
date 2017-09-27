@@ -40,4 +40,5 @@ trait GraphQLGlobalTrait
         }
         throw new Exception($message,$code);
     }
+
 }

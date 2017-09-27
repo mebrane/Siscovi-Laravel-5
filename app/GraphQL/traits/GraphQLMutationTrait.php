@@ -14,7 +14,6 @@ use Rebing\GraphQL\Support\Type as GraphQLType;
 
 trait GraphQLMutationTrait
 {
-    use GraphQLGlobalTrait;
     /**
      * @return Model Returns the Builder with data filled.
      */

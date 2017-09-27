@@ -12,7 +12,6 @@ use GraphQL\Type\Definition\Type;
 
 trait GraphQLTypeTrait
 {
-    use GraphQLGlobalTrait;
     protected function _fields($fields)
     {
         return array_merge($fields, $this->_dateFields());
