@@ -2,13 +2,16 @@
 
 namespace App\GraphQL\Type;
 
+use App\GraphQL\traits\GraphQLTypeTrait;
 use App\models\Personal;
 use Carbon\Carbon;
+use GraphQL;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 
 class PersonalType extends GraphQLType
 {
+    use GraphQLTypeTrait;
     protected $attributes = [
         'name' => 'PersonalType',
         'description' => 'A type',
@@ -17,34 +20,28 @@ class PersonalType extends GraphQLType
 
     public function fields()
     {
-        return [
+        $cols=[
             'id' => [
                 'type' => Type::nonNull(Type::int()),
-                'col' => 'id',
                 'description' => 'The id of the personal'
             ],
             'nombre' => [
                 'type' => Type::nonNull(Type::string()),
                 'description' => 'The name of personal',
-                'col' => 'name',
-                'resolve' => function ($root, $args) {
-                    return strtolower($root->name);
-                },
-//                'selectable'=>false
+//                'resolve' => function ($root, $args) {
+//                    return strtolower($root->name);
+//                },
             ],
             'apellido' => [
                 'type' => Type::nonNull(Type::string()),
-                'col' => 'lastName',
                 'description' => 'The lastname of personal'
             ],
             'DNI' => [
                 'type' => Type::string(),
-                'col' => 'DNI',
                 'description' => 'The DNI of personal'
             ],
             'nacimiento' => [
                 'type' => Type::nonNull(Type::string()),
-                'col' => 'birthDate',
                 'description' => 'The birth date of personal'
             ],
             'edad' => [
@@ -55,7 +52,6 @@ class PersonalType extends GraphQLType
             'contrato' => [
                 'type' => Type::nonNull(Type::string()),
                 'description' => 'The contract date of personal',
-                'col' => 'contractDate',
             ],
             'diasContrato' => [
                 'type' => Type::nonNull(Type::int()),
@@ -70,56 +66,33 @@ class PersonalType extends GraphQLType
             'sueldo' => [
                 'type' => Type::nonNull(Type::float()),
                 'description' => 'The salary of personal',
-                'col' => 'salary',
             ],
             'sexo' => [
                 'type' => Type::nonNull(Type::string()),
                 'description' => 'The gender of personal',
-                'col' => 'gender',
             ],
             'direccion' => [
                 'type' => Type::string(),
                 'description' => 'The address of personal',
-                'col' => 'address',
             ],
             'telefono' => [
                 'type' => Type::string(),
                 'description' => 'The phone number of personal',
-                'col' => 'phone',
             ],
             'correo' => [
                 'type' => Type::string(),
                 'description' => 'The email of personal',
-                'col' => 'email',
-//                'resolve'=>function($root,$args){
-//                    return strtolower($root->correo);
-//                }
-            ],
-            'creado' => [
-                'type' => Type::string(),
-                'description' => 'Fecha de creación',
-                'col' => 'created_at',
-                'resolve' => function ($root, $args) {
-                    return strtolower($root->created_at);
-                }
-            ],
-            'actualizado' => [
-                'type' => Type::string(),
-                'description' => 'Fecha de última actualización',
-                'col' => 'updated_at',
-                'resolve' => function ($root, $args) {
-                    return strtolower($root->updated_at);
-                }
-            ],
-            'eliminado' => [
-                'type' => Type::string(),
-                'description' => 'Fecha de eliminación',
-                'col' => 'deleted_at',
-                'resolve' => function ($root, $args) {
-                    return $root->deleted_at ? strtolower($root->deleted_at) : $root->deleted_at;
-                }
             ],
         ];
+        $relations=[
+            'usuario' => [
+
+                'type' => GraphQL::type('user'),
+                'description' => 'The user of personal',
+//                'always'=>['username','id','usuario','created_at'],
+            ],
+        ];
+        return $this->_fields(array_merge($cols,$relations));
     }
 
 

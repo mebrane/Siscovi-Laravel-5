@@ -2,21 +2,51 @@
 
 namespace App\models\auth;
 
+use App\GraphQL\traits\EloquenceModelTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Mockery\Exception;
+use Sofa\Eloquence\Eloquence;
+use Sofa\Eloquence\Mappable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable
 {
     use Notifiable;
-    use EntrustUserTrait { restore as private restoreA; }
-    use SoftDeletes { restore as private restoreB; }
+
+    //https://github.com/jarektkaczyk/eloquence/issues/66#issuecomment-214501891
+    use EntrustUserTrait {
+        restore as private restoreA;
+        EntrustUserTrait::save as entrustSave;
+        Eloquence::save insteadof EntrustUserTrait;
+    }
+
+    use SoftDeletes {
+        restore as private restoreB;
+    }
+    use Eloquence, Mappable;
+    use EloquenceModelTrait;
 
     public function restore()
     {
         $this->restoreA();
         $this->restoreB();
+    }
+
+    protected $table="users";
+    protected $maps;
+    protected $appends;
+
+    function __construct($attributes = array())
+    {
+        parent::__construct($attributes);
+
+        $maps = [
+            'usuario' => 'username',
+            'clave' => 'password',
+        ];
+        $this->_loadMaps($maps);
     }
 
     /**
@@ -25,9 +55,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username',
-        //'email',
-        'password',
+//        'username',
+//        //'email',
+//        'password',
+        'usuario',
+        'clave',
     ];
 
     /**
@@ -41,7 +73,8 @@ class User extends Authenticatable
 
     protected $dates = ['deleted_at'];
 
-    function personal(){
-        return $this->belongsTo(\App\models\Personal::class,'id');
+    function personal()
+    {
+        return $this->belongsTo(\App\models\Personal::class, 'id');
     }
 }

@@ -42,21 +42,20 @@ class PersonalsQuery extends Query
 
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {
-//        $this->_showError(implode(",",$fields->getSelect()) );
         $q = new Personal();
         $where = ['DNI'];
         $whereLike = ['nombre', 'apellido', 'correo'];
-        $sort = ['id','nombre', 'apellido', 'correo','creado','eliminado','actualizado'];
+        $sort = ['id', 'nombre', 'apellido', 'correo', 'creado', 'eliminado', 'actualizado'];
 
-        $q = $q->with($fields->getRelations());
-        $q=$this->_selectData($q,$fields->getSelect());
+        $q = $q
+            ->with($fields->getRelations())
+            ->select($fields->getSelect());
 
-//        $this->_showError($q->toSql());
-        $q=$this->_where($q,$args,$where);
-        $q=$this->_whereLike($q,$args,$whereLike);
+        $q = $this->_where($q, $args, $where);
+        $q = $this->_whereLike($q, $args, $whereLike);
 
         if (isset($args['sort'])) {
-            $q=$this->_sortData($q,$args['sort'],$sort);
+            $q = $this->_sortData($q, $args['sort'], $sort);
         }
 
         return $q->paginate($args['limit'], ['*'], 'page', $args['page']);

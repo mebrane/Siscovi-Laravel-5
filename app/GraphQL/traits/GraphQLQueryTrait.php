@@ -16,17 +16,17 @@ trait GraphQLQueryTrait
     use GraphQLGlobalTrait;
 
     /**
-     * @return Builder Returns the Builder with selects.
-     */
-    protected function _selectData(Builder $q, array $selects)
-    {
-        foreach ($selects as $key => $select) {
-            list($table, $field) = explode('.', $select);
-            $selects[$key] = $field;
-//            $q=$q->select($field);
-        }
-        return $q->select($selects);
-    }
+//     * @return Builder Returns the Builder with selects.
+//     */
+//    protected function _selectData(Builder $q, array $selects)
+//    {
+//        foreach ($selects as $key => $select) {
+//            list($table, $field) = explode('.', $select);
+//            $selects[$key] = $field;
+////            $q=$q->select($field);
+//        }
+//        return $q->select($selects);
+//    }
 
     /**
      * @return Builder Returns the Builder with sort and sortDesc.
@@ -73,7 +73,8 @@ trait GraphQLQueryTrait
     protected function _whereLike(Builder $q, array $args, array $allowed)
     {
         foreach ($args as $query => $arg){
-            if(in_array($query,$allowed)){
+            $arg=trim($arg);
+            if(in_array($query,$allowed) && $arg !=""){
                 $q->where($query,'like', "%$arg%");
             }
         }

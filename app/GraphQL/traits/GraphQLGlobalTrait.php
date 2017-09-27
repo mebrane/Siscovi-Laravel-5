@@ -12,7 +12,7 @@ namespace App\GraphQL\traits;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 use Rebing\GraphQL\Error\ValidationError;
-use Rebing\GraphQL\Support\Type as GraphQLType;
+
 trait GraphQLGlobalTrait
 {
     protected function _validate($args=[]){
@@ -35,6 +35,9 @@ trait GraphQLGlobalTrait
 
 
     public function _showError($message='',$code=500){
+        if(is_array($message) or is_object($message)){
+            $message=json_encode($message);
+        }
         throw new Exception($message,$code);
     }
 }

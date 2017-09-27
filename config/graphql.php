@@ -87,6 +87,9 @@ return [
 //            Personal
                   'personal'=>\App\GraphQL\Query\personal\PersonalQuery::class,
                   'personals'=>\App\GraphQL\Query\personal\PersonalsQuery::class,
+//            Usuario
+                  'usuario'=>\App\GraphQL\Query\user\UserQuery::class,
+//                  'usuarios'=>\App\GraphQL\Query\user\UsersQuery::class,
             ],
             'mutation' => [
 //                'example_mutation'  => ExampleMutation::class,
@@ -109,6 +112,7 @@ return [
     //
     'types' => [
         'personal'=>\App\GraphQL\Type\PersonalType::class,
+        'user'=>\App\GraphQL\Type\UserType::class,
 //        'example'           => ExampleType::class,
 //        'relation_example'  => ExampleRelationType::class,
     ],

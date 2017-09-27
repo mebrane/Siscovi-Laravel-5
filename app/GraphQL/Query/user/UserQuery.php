@@ -1,26 +1,29 @@
 <?php
 
-namespace App\GraphQL\Query\personal;
+namespace App\GraphQL\Query\user;
 
+use App\models\auth\User;
 use App\GraphQL\traits\GraphQLQueryTrait;
-use App\models\Personal;
+//use App\GraphQL\Type\UserType;
+use GraphQL;
+
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ResolveInfo;
 use Rebing\GraphQL\Support\SelectFields;
 use Rebing\GraphQL\Support\Query;
-use GraphQL;
-class PersonalQuery extends Query
+
+class UserQuery extends Query
 {
     use GraphQLQueryTrait;
     protected $attributes = [
-        'name' => 'PersonalQuery',
+        'name' => 'UserQuery',
         'description' => 'A query'
     ];
 
     public function type()
     {
-//        return Type::listOf(Type::string());
-        return GraphQL::type('personal');
+        return GraphQL::type('user');
+//        return GraphQL::type(UserType::class);
     }
 
     public function args()
@@ -32,16 +35,16 @@ class PersonalQuery extends Query
 
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {
-        $q=new Personal();
+        $q = new User();
 
         $q
             ->with($fields->getRelations())
             ->select($fields->getSelect())
-            ->where('id',$args['id']);
-
-        $r=$q->first();
-        if(!$r){
-            throw new \Exception("Personal no encontrado");
+            ->where('id', $args['id']);
+        $r = $q
+            ->first();
+        if (!$r) {
+            $this->_showError("Usuario no encontrado",404);
         }
         return $r;
     }
