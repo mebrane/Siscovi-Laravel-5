@@ -45,25 +45,25 @@ class AuthSeed extends Seeder
         $admin->attachPermissions(array($createPersonal, $editPersonal));
 
         \App\models\Personal::find(1)
-            ->user()->save(factory(User::class,1)->make()->first());
+            ->usuario()->save(factory(User::class,1)->make()->first());
 
         \App\models\Personal::find(2)
-            ->user()->save(factory(User::class,1)->make()->first());
+            ->usuario()->save(factory(User::class,1)->make()->first());
 
         \App\models\Personal::find(3)
-            ->user()->save(factory(User::class,1)->make()->first());
+            ->usuario()->save(factory(User::class,1)->make()->first());
 
         \App\models\Personal::find(4)
-            ->user()->save(factory(User::class,1)->make()->first());
+            ->usuario()->save(factory(User::class,1)->make()->first());
 
         \App\models\Personal::find(5)
-            ->user()->save(factory(User::class,1)->make()->first());
+            ->usuario()->save(factory(User::class,1)->make()->first());
 
         \App\models\Personal::find(6)
-            ->user()->save(factory(User::class)->make());
+            ->usuario()->save(factory(User::class)->make());
 
-        \App\models\Personal::find(1)->user->attachRole($admin);
-        \App\models\Personal::find(2)->user->attachRole($role1);
+        \App\models\Personal::find(1)->usuario->attachRole($admin);
+        \App\models\Personal::find(2)->usuario->attachRole($role1);
 //        factory(User::class,5)->create();
 //        User::find(1)->attachRole($admin);
 //        User::find(2)->attachRole($admin);

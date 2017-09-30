@@ -49,11 +49,12 @@ class RestorePersonalMutation extends Mutation
             ->with($with)
             ->select($select);
 
-        $q = $this->_orWhere($q, $args, $orWhere);
+        $q = $this->_orWhereEncapsuled($q, $args, $orWhere);
+
         $q = $q->first();
 
         if (!$q) {
-            $this->_showError($notFoundMsg);
+            $this->_showError($notFoundMsg,404);
         }
         $q->restore();
 

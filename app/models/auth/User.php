@@ -13,6 +13,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable
 {
+
     use Notifiable;
 
     //https://github.com/jarektkaczyk/eloquence/issues/66#issuecomment-214501891
@@ -25,8 +26,10 @@ class User extends Authenticatable
     use SoftDeletes {
         restore as private restoreB;
     }
-    use Eloquence, Mappable;
+    use Eloquence;
+//    use Mappable;
     use EloquenceModelTrait;
+
 
     public function restore()
     {
@@ -40,6 +43,8 @@ class User extends Authenticatable
 
     function __construct($attributes = array())
     {
+
+
         parent::__construct($attributes);
 
         $maps = [

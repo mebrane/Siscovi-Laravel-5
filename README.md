@@ -16,3 +16,6 @@
 - [Laravel - Collections](https://laravel.com/docs/5.4/collections)
 - [Laravel - Eloquent Collections](https://laravel.com/docs/5.4/eloquent-collections)
 - [Eloquent - Soft Deleting](https://laravel.com/docs/5.4/eloquent#soft-deleting)
+
+## Notes
+- Comment Mappable line in App\GraphQL\traits\EloquenceModelTrait before seed. 

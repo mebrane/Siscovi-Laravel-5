@@ -25,4 +25,13 @@ trait GraphQLMutationTrait
         }
         return $model;
     }
+
+    /**
+     * @return Model Returns the Builder with data filled.
+     */
+    protected function _fillOnIns(Model $model,array $args){
+        $keys = array_flip($model->_fillable());
+        $_args = array_intersect_key($args,$keys);
+        return $model->fill($_args );
+    }
 }

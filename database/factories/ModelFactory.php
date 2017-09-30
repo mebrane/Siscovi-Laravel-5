@@ -11,8 +11,8 @@
 |
 */
 use Carbon\Carbon;
-
-
+//Sofa\Eloquence\Model::unsetEventDispatcher();
+//Sofa\Eloquence\Model::unsetEventDispatcher();
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\models\auth\User::class, function (Faker\Generator $faker) {
     static $password;
@@ -27,11 +27,8 @@ $factory->define(App\models\auth\User::class, function (Faker\Generator $faker) 
 });
 
 $factory->define(App\models\Personal::class, function (Faker\Generator $faker) {
-    static $password;
-
     $gender = $faker->randomElement(['M', 'F']);
     $firstNameGender = $gender == 'M' ? 'male' : 'female';
-
     return [
         'name' => $faker->firstName($firstNameGender),
         'lastName' => $faker->lastName,
@@ -45,6 +42,19 @@ $factory->define(App\models\Personal::class, function (Faker\Generator $faker) {
         'address' => $faker->address,
         'phone' => $faker->phoneNumber,
         'email' => $faker->unique()->email
+
+//        'nombre' => $faker->firstName($firstNameGender),
+//        'apellido' => $faker->lastName,
+//
+//        'DNI' => $faker->unique()->numerify('########'),
+//        'nacimiento' => $faker->dateTimeBetween('-30 years', '-18 years'),
+//        'contrato' => $faker->dateTimeBetween('-10 years', '-1 months'),
+//        'sueldo' => $faker->numberBetween(600, 1600),
+//        'sexo' => $gender,
+//
+//        'direccion' => $faker->address,
+//        'telefono' => $faker->phoneNumber,
+//        'correo' => $faker->unique()->email
     ];
 });
 

@@ -3,7 +3,7 @@
 namespace App\models;
 
 use App\GraphQL\traits\EloquenceModelTrait;
-use Illuminate\Database\Eloquent\Builder;
+use App\GraphQL\traits\ModelGlobalTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Sofa\Eloquence\Eloquence;
@@ -11,12 +11,14 @@ use Sofa\Eloquence\Mappable;
 
 class Personal extends Model
 {
-    use SoftDeletes, Eloquence, Mappable;
-    use EloquenceModelTrait;
+//    use SoftDeletes;
+    use Eloquence;
+//    use Mappable;
+    use ModelGlobalTrait;
 
     protected $table = "personals";
-    protected $maps;
-    protected $appends;
+//    protected $maps;
+//    protected $appends;
 
     function __construct($attributes = array())
     {
@@ -33,6 +35,9 @@ class Personal extends Model
             'sexo' => 'gender',
             'direccion' => 'address',
             'telefono' => 'phone',
+
+//            'usuario_usuario'=>'usuario.usuario',
+//            'usuario_id'=>'usuario.id',
         ];
         $this->_loadMaps($maps);
     }
@@ -51,11 +56,8 @@ class Personal extends Model
     ];
 
 
-    function usuario()
+    public function usuario()
     {
-        if($this->deleted_at){
-            return $this->hasOne(auth\User::class, 'id')->withTrashed();
-        }
         return $this->hasOne(auth\User::class, 'id');
     }
 
@@ -72,8 +74,8 @@ class Personal extends Model
             $m->usuario()->delete();
         });
 
-        static::restoring(function(Personal $m) {
-            $m->usuario()->restore();
-        });
+//        static::restoring(function(Personal $m) {
+//            $m->usuario()->restore();
+//        });
     }
 }

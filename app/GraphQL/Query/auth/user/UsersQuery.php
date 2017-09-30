@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GraphQL\Query\user;
+namespace App\GraphQL\Query\auth\user;
 
 use App\models\auth\User;
 use App\GraphQL\traits\GraphQLQueryTrait;
@@ -40,16 +40,17 @@ class UsersQuery extends Query
         $q = new User();
         $where = [];
         $whereLike = ['usuario'];
-        $sort = ['id','usuario','creado','eliminado','actualizado'];
+        $sort = ['id', 'usuario', 'creado', 'eliminado', 'actualizado'];
 
-        $q->with($fields->getRelations());
-        $q->select($fields->getSelect());
+        $q = $q
+            ->with($fields->getRelations())
+            ->select($fields->getSelect());
 
-        $q=$this->_where($q,$args,$where);
-        $q=$this->_whereLike($q,$args,$whereLike);
+        $q = $this->_where($q, $args, $where);
+        $q = $this->_whereLike($q, $args, $whereLike);
 
         if (isset($args['sort'])) {
-            $q=$this->_sortData($q,$args['sort'],$sort);
+            $q = $this->_sortData($q, $args['sort'], $sort);
         }
 
         return $q->paginate($args['limit'], ['*'], 'page', $args['page']);

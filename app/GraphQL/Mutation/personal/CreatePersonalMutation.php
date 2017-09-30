@@ -4,6 +4,7 @@ namespace App\GraphQL\Mutation\personal;
 
 use App\GraphQL\traits\GraphQLGlobalTrait;
 //use App\GraphQL\traits\GraphQLMutationTrait;
+use App\GraphQL\traits\GraphQLMutationTrait;
 use App\GraphQL\Type\PersonalType;
 use App\models\Personal;
 use GraphQL;
@@ -16,7 +17,7 @@ use Rebing\GraphQL\Support\SelectFields;
 class CreatePersonalMutation extends Mutation
 {
     use GraphQLGlobalTrait;
-//    use GraphQLMutationTrait;
+    use GraphQLMutationTrait;
     protected $attributes = [
         'name' => 'CreatePersonalMutation',
         'description' => 'A mutation'
@@ -46,14 +47,14 @@ class CreatePersonalMutation extends Mutation
 
     private function _rules()
     {
-        $mut=new UpdatePersonalMutation();
-        $rules=$mut->_rules(['id'=>0]);
-        $requiredExcept=['id','telefono','direccion'];
-        foreach ($rules as $key => $value){
-            if(!in_array($key,$requiredExcept)){
-                $value = is_array($value) ? $value : explode("|",$value);
-                $rules[$key]=array_unshift($value,'required');
-                $rules[$key]=$value;
+        $mut = new UpdatePersonalMutation();
+        $rules = $mut->_rules(['id' => 0]);
+        $requiredExcept = ['id', 'telefono', 'direccion'];
+        foreach ($rules as $key => $value) {
+            if (!in_array($key, $requiredExcept)) {
+                $value = is_array($value) ? $value : explode("|", $value);
+                $rules[$key] = array_unshift($value, 'required');
+                $rules[$key] = $value;
             }
         }
         unset($rules['id']);
@@ -63,20 +64,39 @@ class CreatePersonalMutation extends Mutation
     private function _messages()
     {
         return [
-            'required'=>'El campo :attribute es requerido',
-            'correo.unique'=>'El correo ya está en uso',
-            'DNI.unique'=>'El DNI ya está en uso',
+            'required' => 'El campo :attribute es requerido',
+            'correo.unique' => 'El correo ya está en uso',
+            'DNI.unique' => 'El DNI ya está en uso',
 //            'DNI.numeric'=>'El DNI debe contener solo números',
-            'DNI.digits'=>'El DNI debe ser numérico y tener :digits dígitos'
+            'DNI.digits' => 'El DNI debe ser numérico y tener :digits dígitos'
         ];
     }
 
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {
         $this->_validate($args);
+//        $this->_showError($args);
+//        $m = new Personal();
+//        $_args = [
+//            "nombre" => "dffdfsdf",
+//            "apellido" => "sfdsfdsfdsfsd",
+//            "nacimiento" => "1999-01-01",
+//            "correo" => "dsdsdsd@ffds.dfd",
+//            "DNI" => "44455567",
+//            "contrato" => "2000-01-01",
+//            "sueldo" => 2000,
+//            "sexo" => "M",
+//            "telefono" => "324434343",
+//            "direccion" => "fdsfds"
+//        ];
 
-        $m= new Personal();
-        $personal=$m->create($args);
-        return $personal;
+//        $p = new Personal();
+//        $keys = array_flip($p->_fillable());
+//        $_args = array_intersect_key($args,$keys);
+//        $p->fill($_args );
+//        $personal = $p->save();
+        $p=$this->_fillOnIns(new Personal(),$args);
+        $p->save();
+        return $p;
     }
 }

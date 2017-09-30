@@ -9,8 +9,15 @@
 namespace App\GraphQL\traits;
 
 
+use Sofa\Eloquence\Eloquence;
+use Sofa\Eloquence\Mappable;
+
 trait EloquenceModelTrait
 {
+//    use Eloquence;
+
+//Comment before seed
+    use Mappable;
 
     protected $_dateMaps = [
         'creado' => 'created_at',
@@ -28,5 +35,9 @@ trait EloquenceModelTrait
 
         $this->maps = array_merge($maps, $tbmaps);
         $this->appends = array_merge(array_keys($maps));
+    }
+
+    public function _fillable(){
+        return $this->fillable;
     }
 }

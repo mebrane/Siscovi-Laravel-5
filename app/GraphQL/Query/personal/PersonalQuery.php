@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Query\personal;
 
+use App\GraphQL\traits\GraphQLGlobalTrait;
 use App\GraphQL\traits\GraphQLQueryTrait;
 use App\models\Personal;
 use GraphQL\Type\Definition\Type;
@@ -11,6 +12,7 @@ use Rebing\GraphQL\Support\Query;
 use GraphQL;
 class PersonalQuery extends Query
 {
+    use GraphQLGlobalTrait;
     use GraphQLQueryTrait;
     protected $attributes = [
         'name' => 'PersonalQuery',
@@ -33,15 +35,15 @@ class PersonalQuery extends Query
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {
         $q=new Personal();
+        $notFoundMsg="Personal no encontrado";
 
         $q
             ->with($fields->getRelations())
-            ->select($fields->getSelect())
-            ->where('id',$args['id']);
+            ->select($fields->getSelect());
 
-        $r=$q->first();
+        $r=$q->find($args['id']);
         if(!$r){
-            throw new \Exception("Personal no encontrado");
+            throw new \Exception($notFoundMsg,404);
         }
         return $r;
     }

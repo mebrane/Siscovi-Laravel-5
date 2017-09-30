@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Query\personal;
 
+use App\GraphQL\traits\GraphQLGlobalTrait;
 use App\GraphQL\traits\GraphQLQueryTrait;
 use App\GraphQL\Type\PersonalType;
 use App\models\Personal;
@@ -14,6 +15,8 @@ use Rebing\GraphQL\Support\Query;
 
 class PersonalsQuery extends Query
 {
+
+    use GraphQLGlobalTrait;
     use GraphQLQueryTrait;
     protected $attributes = [
         'name' => 'PersonalsQuery',
@@ -57,6 +60,7 @@ class PersonalsQuery extends Query
         if (isset($args['sort'])) {
             $q = $this->_sortData($q, $args['sort'], $sort);
         }
+//        $this->_showError($q->toSql());
 
         return $q->paginate($args['limit'], ['*'], 'page', $args['page']);
     }

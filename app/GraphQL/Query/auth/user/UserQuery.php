@@ -1,7 +1,8 @@
 <?php
 
-namespace App\GraphQL\Query\user;
+namespace App\GraphQL\Query\auth\user;
 
+use App\GraphQL\traits\GraphQLGlobalTrait;
 use App\models\auth\User;
 use App\GraphQL\traits\GraphQLQueryTrait;
 //use App\GraphQL\Type\UserType;
@@ -14,6 +15,7 @@ use Rebing\GraphQL\Support\Query;
 
 class UserQuery extends Query
 {
+    use GraphQLGlobalTrait;
     use GraphQLQueryTrait;
     protected $attributes = [
         'name' => 'UserQuery',
@@ -36,15 +38,17 @@ class UserQuery extends Query
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {
         $q = new User();
+        $notFoundMsg="Personal no encontrado";
 
         $q
             ->with($fields->getRelations())
-            ->select($fields->getSelect())
-            ->where('id', $args['id']);
+            ->select($fields->getSelect());
+
         $r = $q
-            ->first();
+            ->find($args['id']);
+
         if (!$r) {
-            $this->_showError("Usuario no encontrado",404);
+            $this->_showError($notFoundMsg,404);
         }
         return $r;
     }

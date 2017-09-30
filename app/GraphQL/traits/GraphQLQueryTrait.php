@@ -21,17 +21,18 @@ trait GraphQLQueryTrait
         $sorts = explode(',', $arg);
 
         foreach ($sorts as $key => $sort) {
+            //If it's allowed
+            if (in_array($sort, $allowed)) {
 
-            if (strlen($sort) > 1 && in_array($sort, $allowed)) {
+                $q->orderBy($sort);
 
-                if (substr($sort, 0, 1) == '-') {
-
-                    $sort = substr($sort, 1, strlen($sort) - 1);
-                    $q->orderByDesc($sort);
-
-                } else {
-
-                    $q->orderBy($sort);
+            } //If it has "-"
+            elseif (strlen($sort) > 1 && substr($sort, 0, 1) == '-') {
+                //Get value (without "-")
+                $sort = substr($sort, 1, strlen($sort) - 1);
+                //If it's allowed
+                if (in_array($sort, $allowed)) {
+                    $q->orderBy($sort, 'DESC');
                 }
             }
         }
@@ -56,6 +57,18 @@ trait GraphQLQueryTrait
      * @return Builder Returns the builder with filtered orWhere queries.
      */
     protected function _orWhere(Builder $q, array $args, array $allowed)
+    {
+//        $q->where(function (Builder $q) use ($args, $allowed) {
+        foreach ($args as $key => $arg) {
+            if (in_array($key, $allowed)) {
+                $q->orWhere($key, $arg);
+            }
+        }
+//        });
+        return $q;
+    }
+
+    protected function _orWhereEncapsuled(Builder $q, array $args, array $allowed)
     {
         $q->where(function (Builder $q) use ($args, $allowed) {
             foreach ($args as $key => $arg) {

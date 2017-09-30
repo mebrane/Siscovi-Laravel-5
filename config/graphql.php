@@ -85,24 +85,27 @@ return [
             'query' => [
 //                'example_query' => ExampleQuery::class,
 //            Personal
-                  'personal'=>\App\GraphQL\Query\personal\PersonalQuery::class,
-                  'personals'=>\App\GraphQL\Query\personal\PersonalsQuery::class,
+                'personal' => \App\GraphQL\Query\personal\PersonalQuery::class,
+                'personals' => \App\GraphQL\Query\personal\PersonalsQuery::class,
 //            Usuario
-                  'usuario'=>\App\GraphQL\Query\user\UserQuery::class,
-//                  'usuarios'=>\App\GraphQL\Query\user\UsersQuery::class,
+                'usuario' => \App\GraphQL\Query\auth\user\UserQuery::class,
+                'usuarios'=>\App\GraphQL\Query\auth\user\UsersQuery::class,
             ],
             'mutation' => [
 //                'example_mutation'  => ExampleMutation::class,
 //            Personal
-                'updatePersonal'=>\App\GraphQL\Mutation\Personal\UpdatePersonalMutation::class,
-                'createPersonal'=>\App\GraphQL\Mutation\Personal\CreatePersonalMutation::class,
-                'deletePersonal'=>\App\GraphQL\Mutation\Personal\DestroyPersonalMutation::class,
-                'restorePersonal'=>\App\GraphQL\Mutation\Personal\RestorePersonalMutation::class,
+                'updatePersonal' => \App\GraphQL\Mutation\Personal\UpdatePersonalMutation::class,
+                'createPersonal' => \App\GraphQL\Mutation\Personal\CreatePersonalMutation::class,
+                'deletePersonal' => \App\GraphQL\Mutation\Personal\DestroyPersonalMutation::class,
+                'restorePersonal' => \App\GraphQL\Mutation\Personal\RestorePersonalMutation::class,
+
+                'updatePersonalUsuario' => \App\GraphQL\Mutation\Personal\user\UpdatePersonalUserMutation::class,
+                'restorePersonalUsuario' => \App\GraphQL\Mutation\Personal\user\RestorePersonalUserMutation::class,
             ],
             'middleware' => []
         ],
     ],
-    
+
     // The types available in the application. You can then access it from the
     // facade like this: GraphQL::type('user')
     //
@@ -113,12 +116,16 @@ return [
     // ]
     //
     'types' => [
-        'personal'=>\App\GraphQL\Type\PersonalType::class,
-        'user'=>\App\GraphQL\Type\UserType::class,
+//        'login' => \App\GraphQL\Type\auth\LoginType::class,
+//        'permission' => \App\GraphQL\Type\auth\PermissionType::class,
+        'personal' => \App\GraphQL\Type\PersonalType::class,
+//        'rol' => \App\GraphQL\Type\auth\RolType::class,
+        'user' => \App\GraphQL\Type\auth\UserType::class,
+
 //        'example'           => ExampleType::class,
 //        'relation_example'  => ExampleRelationType::class,
     ],
-    
+
     // This callable will be passed the Error object for each errors GraphQL catch.
     // The method should return an array representing the error.
     // Typically:
@@ -129,6 +136,6 @@ return [
     'error_formatter' => ['\Rebing\GraphQL\GraphQL', 'formatError'],
 
     // You can set the key, which will be used to retrieve the dynamic variables
-    'params_key'    => 'params',
-    
+    'params_key' => 'params',
+
 ];
