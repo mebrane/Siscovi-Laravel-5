@@ -15,7 +15,7 @@ class User extends Authenticatable
 {
 
     use Notifiable;
-
+//    use EloquenceModelTrait;
     //https://github.com/jarektkaczyk/eloquence/issues/66#issuecomment-214501891
     use EntrustUserTrait {
         restore as private restoreA;
@@ -27,8 +27,8 @@ class User extends Authenticatable
         restore as private restoreB;
     }
     use Eloquence;
-//    use Mappable;
-    use EloquenceModelTrait;
+    use Mappable;
+
 
 
     public function restore()
@@ -38,8 +38,11 @@ class User extends Authenticatable
     }
 
     protected $table="users";
-    protected $maps;
-    protected $appends;
+    protected $maps=[
+        'usuario' => 'username',
+        'clave' => 'password',
+    ];
+//    protected $appends;
 
     function __construct($attributes = array())
     {
@@ -47,12 +50,28 @@ class User extends Authenticatable
 
         parent::__construct($attributes);
 
-        $maps = [
-            'usuario' => 'username',
-            'clave' => 'password',
-        ];
-        $this->_loadMaps($maps);
+        $this->_loadMaps();
     }
+
+    protected $_dateMaps = [
+        'creado' => 'created_at',
+        'actualizado' => 'updated_at',
+        'eliminado' => 'deleted_at',
+    ];
+
+    protected function _loadMaps()
+    {
+        $maps = array_merge($this->maps, $this->_dateMaps);
+        $tbmaps = [];
+        foreach ($maps as $key => $map) {
+            $tbmaps["$this->table." . $key] = $map;
+        }
+
+        $this->maps = array_merge($maps, $tbmaps);
+//        $this->appends = array_keys($maps);
+//        $this->fillable = array_merge($this->fillable,array_keys($maps));
+    }
+
 
     /**
      * The attributes that are mass assignable.

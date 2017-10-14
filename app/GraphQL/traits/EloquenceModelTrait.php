@@ -14,10 +14,7 @@ use Sofa\Eloquence\Mappable;
 
 trait EloquenceModelTrait
 {
-//    use Eloquence;
-
-//Comment before seed
-    use Mappable;
+    use Eloquence, Mappable;
 
     protected $_dateMaps = [
         'creado' => 'created_at',
@@ -25,19 +22,21 @@ trait EloquenceModelTrait
         'eliminado' => 'deleted_at',
     ];
 
-    protected function _loadMaps($maps)
+    protected function _loadMaps()
     {
-        $maps = array_merge($maps, $this->_dateMaps);
+        $maps = array_merge($this->maps, $this->_dateMaps);
         $tbmaps = [];
         foreach ($maps as $key => $map) {
             $tbmaps["$this->table." . $key] = $map;
         }
 
         $this->maps = array_merge($maps, $tbmaps);
-        $this->appends = array_merge(array_keys($maps));
+//        $this->appends = array_keys($maps);
+//        $this->fillable = array_merge($this->fillable,array_keys($maps));
     }
 
-    public function _fillable(){
+    public function _fillable()
+    {
         return $this->fillable;
     }
 }

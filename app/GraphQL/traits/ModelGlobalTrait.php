@@ -21,11 +21,11 @@ trait ModelGlobalTrait
 //    use Eloquence;
 //    use Mappable;
 
-    protected $maps;
-    protected $appends;
+//    protected $maps;
+//    protected $appends;
 //    protected $dates = ['deleted_at'];
 
-    //custom traits
+//    custom traits
     use EloquenceModelTrait;
 
 
